@@ -1,153 +1,934 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PioneerEpay - Real-Time Payment Processing</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-        }
-        header {
-            background: #1a1f36;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        nav {
-            background: #0a0e1f;
-            padding: 10px;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 14px;
-        }
-        nav a:hover {
-            color: #635bff;
-        }
-        .hero {
-            background: linear-gradient(135deg, #0a0e1f 0%, #111827 100%);
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-        }
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-        .hero p {
-            font-size: 18px;
-            margin-bottom: 30px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .btn {
-            background: #635bff;
-            color: white;
-            padding: 12px 30px;
-            text-decoration: none;
-            border-radius: 5px;
-            display: inline-block;
-            margin: 5px;
-        }
-        .btn:hover {
-            background: #7a73ff;
-        }
-        .features {
-            padding: 60px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
-        }
-        .feature-card {
-            background: #f6f9fc;
-            padding: 30px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        .feature-card h3 {
-            color: #635bff;
-            margin-bottom: 10px;
-        }
-        footer {
-            background: #0a0e1f;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 60px;
-        }
-    </style>
-</head>
-<body>
 
-<header>
-    <h1>PioneerEpay</h1>
-    <p>Real-Time Payment Processing for Your Business</p>
-</header>
+<!-- TOP BAR -->
+<div class="nav-top-bar">
+  <span>📞 Talk to Sales:</span>
+  <a href="tel:+18003361257">1-800-336-1257</a>
+</div>
 
+<!-- NAVIGATION -->
 <nav>
-    <a href="#home">Home</a>
-    <a href="#features">Features</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#contact">Contact</a>
+  <div class="logo" onclick="showPage('home')">
+    <span style="color: #00a8e8;">Pioneer</span><div class="logo-icon">e</div><span style="color: var(--gold);">pay</span>
+  </div>
+  <div class="nav-menu" id="navMenu">
+    <a onclick="showPage('home'); closeMenu()">Home</a>
+    
+    <!-- INDUSTRIES DROPDOWN -->
+    <div class="nav-dropdown">
+      <span onclick="toggleDropdown(event, 'industriesDropdown')">Industries</span>
+      <div class="dropdown-menu" id="industriesDropdown">
+        <a onclick="showPage('industry-food'); closeMenu()">🍽️ Food & Beverage</a>
+        <a onclick="showPage('industry-hospitality'); closeMenu()">🏨 Hospitality</a>
+        <a onclick="showPage('industry-lodging'); closeMenu()">🏩 Lodging</a>
+        <a onclick="showPage('industry-spa'); closeMenu()">💆 Spa & Salon</a>
+        <a onclick="showPage('industry-sports'); closeMenu()">⚽ Sports & Entertainment</a>
+        <a onclick="showPage('industry-healthcare'); closeMenu()">⚕️ Healthcare</a>
+        <a onclick="showPage('industry-retail'); closeMenu()">🛍️ Retail</a>
+        <a onclick="showPage('industry-nonprofit'); closeMenu()">❤️ Non-Profits</a>
+      </div>
+    </div>
+
+    <!-- SOLUTIONS DROPDOWN -->
+    <div class="nav-dropdown">
+      <span onclick="toggleDropdown(event, 'solutionsDropdown')">Solutions</span>
+      <div class="dropdown-menu" id="solutionsDropdown">
+        <a onclick="showPage('solution-pos'); closeMenu()">🖥️ POS Systems</a>
+        <a onclick="showPage('solution-payments'); closeMenu()">💳 Payment Processing</a>
+        <a onclick="showPage('solution-gateway'); closeMenu()">🌐 Payment Gateway</a>
+        <a onclick="showPage('solution-capital'); closeMenu()">💼 Business Capital</a>
+        <a onclick="showPage('solution-analytics'); closeMenu()">📊 Analytics & Reporting</a>
+        <a onclick="showPage('solution-ticketing'); closeMenu()">🎫 Ticketing Solutions</a>
+        <a onclick="showPage('solution-golf'); closeMenu()">⛳ Golf Solutions</a>
+        <a onclick="showPage('solution-agora'); closeMenu()">🛒 Agora Retail</a>
+      </div>
+    </div>
+
+    <a onclick="showPage('pricing'); closeMenu()">Pricing</a>
+    <a onclick="showPage('about'); closeMenu()">About Us</a>
+    <a class="tunapos-link" href="https://www.tuna-pos.com" target="_blank">TunaPos</a>
+    <button class="nav-cta" onclick="showPage('contact'); closeMenu()">Get Started</button>
+  </div>
+  <button class="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </nav>
 
-<section class="hero">
-    <h1>Accept Payments Anywhere</h1>
-    <p>Real-time settlements, transparent pricing, and 24/7 support. No contracts, no hidden fees.</p>
-    <a href="#" class="btn">Get Started</a>
-    <a href="#" class="btn" style="background: transparent; border: 2px solid white;">Learn More</a>
-</section>
-
-<section class="features" id="features">
-    <h2>Why Choose PioneerEpay?</h2>
-    <div class="feature-grid">
-        <div class="feature-card">
-            <h3>⚡ Real-Time Settlements</h3>
-            <p>Money in your account instantly, not in 3-5 business days.</p>
+<!-- HOME PAGE (keeping original) -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">Founded 2017 · Proven Track Record</div>
+        <h1>Accept Payments <span>Wherever Your<br>Business Takes You</span></h1>
+        <p class="hero-subtitle">Whether your customers pay in person, online, or on the go, you can keep everything in one place—making it simple to track payments and stay on top of your finances.</p>
+        <p class="hero-promise">Unified • Real-Time • Always Available</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">Accept Payments Today</button>
+          <button class="btn-outline" onclick="showPage('solution-payments')">See All Payment Options</button>
         </div>
-        <div class="feature-card">
-            <h3>💰 Transparent Pricing</h3>
-            <p>0.25% + $0.10. Same price forever. No surprises.</p>
-        </div>
-        <div class="feature-card">
-            <h3>🔒 Secure & Certified</h3>
-            <p>PCI DSS Level 1. Enterprise-grade security.</p>
-        </div>
-        <div class="feature-card">
-            <h3>👥 Real Human Support</h3>
-            <p>24/7 support from real engineers. No bots.</p>
-        </div>
-        <div class="feature-card">
-            <h3>🚀 No Contracts</h3>
-            <p>Cancel anytime. We keep you because we're better.</p>
-        </div>
-        <div class="feature-card">
-            <h3>⚙️ Easy Integration</h3>
-            <p>Works with Square, Toast, Shopify, and more.</p>
-        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-placeholder">[Hero Image: Payment Processing Dashboard]</div>
+      </div>
     </div>
-</section>
+  </div>
 
+  <div class="trust-bar">
+    <div class="trust-item">
+      <div class="trust-icon">🔒</div>
+      <span>PCI DSS Level 1 Certified</span>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">⚡</div>
+      <span>Real-Time Settlements</span>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">📞</div>
+      <span>24/7 Human Support</span>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">✓</div>
+      <span>99.99% Uptime SLA</span>
+    </div>
+  </div>
+
+  <section style="background: #f6f9fc;">
+    <div class="section-inner">
+      <div class="section-label">Why Businesses Switch to PioneerEpay</div>
+      <h2 class="section-title">The Payment Processor That <span>Actually Works</span></h2>
+      <p class="section-sub">We've been trusted by restaurants, retail, healthcare, and beyond. Here's what sets us apart.</p>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <h3>💰 Real-Time Money</h3>
+          <p>See transactions settle instantly instead of waiting 3-5 business days. Cash in your account when you need it, not when a competitor decides to send it.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🎯 Transparent Pricing</h3>
+          <p>No quarterly rate increases. No hidden fees buried in statements. Just 0.25% + $0.10. Same price for everyone, forever.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🚀 No Contracts, No Tricks</h3>
+          <p>Cancel anytime. We don't trap you with 3-year commitments or early termination fees. We keep you because we're better, not because you can't leave.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🏢 Built for Your Business</h3>
+          <p>Whether you're a $50K/month salon or a $5M/year retail chain, we have solutions that fit. No "enterprise only" pricing tiers.</p>
+        </div>
+        <div class="feature-card">
+          <h3>👥 Real Human Support</h3>
+          <p>Call us. A person answers. Not a robot, not a menu tree. Engineers and operations experts available 24/7 to help you.</p>
+        </div>
+        <div class="feature-card">
+          <h3>⚙️ Works With Your Setup</h3>
+          <p>Seamless integration with Square, Toast, Shopify, QuickBooks, or your existing system. One API, unlimited possibilities.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- SPA & SALON INDUSTRY PAGE -->
+<div id="page-industry-spa" class="page">
+  <div class="hero" style="min-height: 60vh;">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">Spa & Salon Solutions</div>
+        <h1>Payment Processing for <span>Spas & Salons</span></h1>
+        <p class="hero-subtitle">From appointments to retail product sales, manage every transaction. Appointment-based billing, package management, gift cards, and tipping—all integrated seamlessly.</p>
+        <p class="hero-promise">Appointment Sync • Package Management • Gift Cards</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">Start Your Demo</button>
+          <button class="btn-outline" onclick="showPage('solution-pos')">Explore POS System</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-placeholder">[Spa & Salon Payment System Image]</div>
+      </div>
+    </div>
+  </div>
+
+  <section style="background: #f6f9fc;">
+    <div class="section-inner">
+      <h2 class="section-title">Built for <span>Spas & Salons</span></h2>
+      <p class="section-sub">Beauty and wellness businesses need flexible payment systems that understand appointments, memberships, and retail sales.</p>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <h3>📅 Appointment-Based Billing</h3>
+          <p>Automatically charge customers for booked services. Send appointment reminders and payment confirmations. No-show fees handled automatically.</p>
+        </div>
+        <div class="feature-card">
+          <h3>💇 Package Management</h3>
+          <p>Create and sell service packages (6 sessions, monthly memberships). Track package usage and expiration. Auto-refill options available.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🎁 Gift Cards & Retail</h3>
+          <p>Sell physical and digital gift cards. Manage inventory for retail products (lotions, supplements). Track margins by product and stylist.</p>
+        </div>
+        <div class="feature-card">
+          <h3>💅 Stylist Commissions</h3>
+          <p>Track individual stylist sales and tips. Automatic commission calculations. Instant payouts to team members. Commission by service type.</p>
+        </div>
+        <div class="feature-card">
+          <h3>💳 Flexible Tipping</h3>
+          <p>Smart tipping suggestions that increase revenue. Customize tip percentages per service. Tips paid out separately to staff.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📊 Business Analytics</h3>
+          <p>See your top services, best-performing stylists, and peak hours. Customer lifetime value tracking. Repeat visit analytics.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner" style="text-align: center;">
+      <h2 class="section-title">Grow Your <span>Salon Business</span></h2>
+      <p class="section-sub">Salons and spas increase revenue by 18% on average with appointment-integrated payments.</p>
+      <div class="hero-btns" style="justify-content: center; margin-top: 40px;">
+        <button class="btn-primary" onclick="showPage('contact')">Schedule Demo</button>
+        <button class="btn-outline">See Case Study</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- LODGING INDUSTRY PAGE -->
+<div id="page-industry-lodging" class="page">
+  <div class="hero" style="min-height: 60vh;">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">Vacation Rental & Lodging Solutions</div>
+        <h1>Payment Processing for <span>Lodging Businesses</span></h1>
+        <p class="hero-subtitle">Vacation rentals, B&Bs, and alternative lodging need flexible payments. Handle deposits, cleaning fees, damage charges, and multi-currency transactions effortlessly.</p>
+        <p class="hero-promise">Deposit Management • Multi-Currency • Flexible Terms</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">Start Your Demo</button>
+          <button class="btn-outline" onclick="showPage('solution-payments')">View All Solutions</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-placeholder">[Vacation Rental Payment System Image]</div>
+      </div>
+    </div>
+  </div>
+
+  <section style="background: #f6f9fc;">
+    <div class="section-inner">
+      <h2 class="section-title">Built for <span>Vacation Rentals & Lodging</span></h2>
+      <p class="section-sub">From vacation rental platforms to B&Bs, manage complex payment scenarios with ease.</p>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <h3>🔐 Secure Deposits</h3>
+          <p>Collect security deposits at booking. Hold funds safely. Auto-refund after checkout if no damage. Dispute resolution built-in.</p>
+        </div>
+        <div class="feature-card">
+          <h3>💰 Multi-Fee Management</h3>
+          <p>Nightly rates, cleaning fees, service fees, damage charges—all handled automatically. Itemized invoices sent to guests. Flexible pricing rules.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🌍 Multi-Currency Support</h3>
+          <p>Accept payments in 30+ currencies. Real-time exchange rates. Settle in your local currency. Global guest support.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📱 Guest Portal</h3>
+          <p>Guests pay online before arrival. Contactless check-in available. Digital key access integration. Automated reminders and receipts.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🛎️ Integrated Messaging</h3>
+          <p>Send payment reminders and receipts via SMS and email. Guest support messaging in one place. Automated follow-ups post-stay.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📊 Occupancy Analytics</h3>
+          <p>Track occupancy rates and revenue per property. Seasonal pricing optimization. Competitor benchmarking. Forecasting tools.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner" style="text-align: center;">
+      <h2 class="section-title">Maximize Your <span>Rental Revenue</span></h2>
+      <p class="section-sub">Lodging businesses increase revenue by 22% with smart payment and pricing strategies.</p>
+      <div class="hero-btns" style="justify-content: center; margin-top: 40px;">
+        <button class="btn-primary" onclick="showPage('contact')">Get Started</button>
+        <button class="btn-outline">Download Best Practices</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- GOLF SOLUTIONS MAIN PAGE -->
+<div id="page-solution-golf" class="page">
+  <div class="hero" style="min-height: 60vh;">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">Golf Course Payment Solutions</div>
+        <h1>Complete Payment System for <span>Golf Courses</span></h1>
+        <p class="hero-subtitle">From tee time bookings to pro shop sales, beverage cart payments to tournament management—all integrated into one powerful platform.</p>
+        <p class="hero-promise">Tee Time Booking • Pro Shop • Membership • Cart Payments</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">Start Your Demo</button>
+          <button class="btn-outline">View Golf Features</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-placeholder">[Golf Course Payment System Image]</div>
+      </div>
+    </div>
+  </div>
+
+  <section style="background: #f6f9fc;">
+    <div class="section-inner">
+      <h2 class="section-title">Choose Your <span>Golf Course Type</span></h2>
+      <p class="section-sub">Golf course operations vary widely. We have specialized solutions for each.</p>
+      <div class="cards-grid">
+        <div class="feature-card" onclick="showPage('golf-multi'); scrollTo(0,0)">
+          <h3>🏌️ Multi-Course Resorts</h3>
+          <p>Manage multiple courses from one dashboard. Guest charging across facilities. Package deals and memberships. Shared inventory and staff management.</p>
+          <p style="color: var(--blue); font-weight: 600; margin-top: 12px; cursor: pointer;">Learn More →</p>
+        </div>
+        <div class="feature-card" onclick="showPage('golf-municipal'); scrollTo(0,0)">
+          <h3>🏛️ Municipal Courses</h3>
+          <p>Budget-friendly solutions for public courses. Quick tee time bookings. Food & beverage management. Tournament and event support.</p>
+          <p style="color: var(--blue); font-weight: 600; margin-top: 12px; cursor: pointer;">Learn More →</p>
+        </div>
+        <div class="feature-card" onclick="showPage('golf-private'); scrollTo(0,0)">
+          <h3>🏰 Private Clubs</h3>
+          <p>Membership management and billing. Guest charging with member guarantees. Dining and cart billing. Club-wide revenue tracking.</p>
+          <p style="color: var(--blue); font-weight: 600; margin-top: 12px; cursor: pointer;">Learn More →</p>
+        </div>
+        <div class="feature-card" onclick="showPage('golf-resort'); scrollTo(0,0)">
+          <h3>🏨 Golf Resorts</h3>
+          <p>Guest billing integration with hotel. Package deals (golf + lodging). All-inclusive resort billing. Tournament hosting capabilities.</p>
+          <p style="color: var(--blue); font-weight: 600; margin-top: 12px; cursor: pointer;">Learn More →</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner">
+      <h2 class="section-title">Why Golf Courses Choose <span>PioneerEpay</span></h2>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <h3>⛳ Tee Time Integration</h3>
+          <p>Automatic billing for reserved tee times. Cancellation fee handling. Waiting list management. Real-time availability updates.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🏪 Pro Shop Management</h3>
+          <p>Inventory tracking for golf equipment and apparel. Real-time stock levels. Consignment tracking. Handicap index integration.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🥤 Beverage Cart Payments</h3>
+          <p>Mobile POS for carts and roaming staff. Tap-to-pay mobile terminals. Guest billing or direct payment. Sales analytics by cart.</p>
+        </div>
+        <div class="feature-card">
+          <h3>👥 Membership Billing</h3>
+          <p>Monthly or annual membership charges. Guest fees and passes. Privilege escalation. Member portal for account management.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🎯 Tournament Management</h3>
+          <p>Entry fee collection and management. Scorekeeping integration. Prize distribution automation. Sponsor payment tracking.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📊 Golf Analytics</h3>
+          <p>Revenue per round tracking. Peak hour analysis. Membership retention metrics. Pricing optimization recommendations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: #f6f9fc;">
+    <div class="section-inner" style="text-align: center;">
+      <h2 class="section-title">Grow Your Golf <span>Business Today</span></h2>
+      <p class="section-sub">Golf courses increase revenue by 19% on average with integrated payment systems.</p>
+      <div class="hero-btns" style="justify-content: center; margin-top: 40px;">
+        <button class="btn-primary" onclick="showPage('contact')">Schedule Demo</button>
+        <button class="btn-outline">Download Golf Guide</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- GOLF SUB-PAGE: MULTI-COURSE -->
+<div id="page-golf-multi" class="page">
+  <div class="hero" style="min-height: 60vh;">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">Golf Resort Solutions</div>
+        <h1>Payment System for <span>Multi-Course Resorts</span></h1>
+        <p class="hero-subtitle">Manage multiple championship courses from a single dashboard. Guest charging across properties, bundled packages, and unified reporting.</p>
+        <p class="hero-promise">Multi-Property • Package Deals • Unified Reporting</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">Start Your Demo</button>
+          <button class="btn-outline" onclick="showPage('solution-golf')">Back to Golf Solutions</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-placeholder">[Multi-Course Resort Image]</div>
+      </div>
+    </div>
+  </div>
+
+  <section style="background: #f6f9fc;">
+    <div class="section-inner">
+      <h2 class="section-title">Multi-Course <span>Resort Management</span></h2>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <h3>🏌️ Multiple Course Management</h3>
+          <p>One system for all courses. Course-specific pricing rules. Shared guest profiles across properties. Unified inventory management.</p>
+        </div>
+        <div class="feature-card">
+          <h3>👥 Guest Charging</h3>
+          <p>Charge all resort expenses to guest accounts. Golf, dining, spa, lodging—all consolidated. Single checkout experience.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📦 Package Deals</h3>
+          <p>Bundle golf + lodging + dining. Dynamic pricing by season. Package tracking and redemption. Multi-day tournament support.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🎯 Tournament Hosting</h3>
+          <p>Manage corporate outings and events. Entry fee collection. Scoring integration. Leaderboard management and updates.</p>
+        </div>
+        <div class="feature-card">
+          <h3>👨‍💼 Staff Management</h3>
+          <p>Shared staff across courses. Shift scheduling and tracking. Tip pool management. Performance analytics by course.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📊 Resort Analytics</h3>
+          <p>Revenue by course and category. Guest spending patterns. Course utilization rates. Pricing optimization insights.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner" style="text-align: center;">
+      <h2 class="section-title">Manage Your Resort with <span>One System</span></h2>
+      <p class="section-sub">Resort operators reduce operational complexity by 35% with unified systems.</p>
+      <div class="hero-btns" style="justify-content: center; margin-top: 40px;">
+        <button class="btn-primary" onclick="showPage('contact')">Schedule Demo</button>
+        <button class="btn-outline" onclick="showPage('solution-golf')">View All Golf Solutions</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- GOLF SUB-PAGE: MUNICIPAL -->
+<div id="page-golf-municipal" class="page">
+  <div class="hero" style="min-height: 60vh;">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">Public Golf Course Solutions</div>
+        <h1>Payment System for <span>Municipal Courses</span></h1>
+        <p class="hero-subtitle">Affordable, reliable payment processing designed for public golf courses. Quick tee time bookings, food and beverage management, and event support.</p>
+        <p class="hero-promise">Budget-Friendly • Quick Setup • Event Ready</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">Start Your Demo</button>
+          <button class="btn-outline" onclick="showPage('solution-golf')">Back to Golf Solutions</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-placeholder">[Municipal Golf Course Image]</div>
+      </div>
+    </div>
+  </div>
+
+  <section style="background: #f6f9fc;">
+    <div class="section-inner">
+      <h2 class="section-title">Public Course <span>Payment Solutions</span></h2>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <h3>📱 Online Tee Time Booking</h3>
+          <p>Golfers book and pay online 24/7. Reduce phone traffic. Automated confirmation emails. Walk-up pricing available.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🏪 Pro Shop Retail</h3>
+          <p>Manage golf balls, clubs, apparel inventory. Quick checkout at counter. Staff commission tracking. Clearance and promotion tools.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🍔 Food & Beverage</h3>
+          <p>Snack bar and grill POS system. Quick order processing. Cart attendant billing. Inventory syncing.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🎯 Tournament Support</h3>
+          <p>Easy tournament registration and fees. Scorecard integration. Prize distribution. Sponsor management.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📊 Course Analytics</h3>
+          <p>Revenue tracking by round. Peak hours and busy days. Most popular tee times. Pricing optimization suggestions.</p>
+        </div>
+        <div class="feature-card">
+          <h3>💰 Budget Pricing</h3>
+          <p>Transparent, low-cost pricing. No monthly minimums. Per-transaction fees. Perfect for municipal budgets.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner" style="text-align: center;">
+      <h2 class="section-title">Increase Municipal Course <span>Revenue Today</span></h2>
+      <p class="section-sub">Public courses increase revenue by 16% with better tee time management.</p>
+      <div class="hero-btns" style="justify-content: center; margin-top: 40px;">
+        <button class="btn-primary" onclick="showPage('contact')">Get Started</button>
+        <button class="btn-outline" onclick="showPage('solution-golf')">View All Golf Solutions</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- GOLF SUB-PAGE: PRIVATE -->
+<div id="page-golf-private" class="page">
+  <div class="hero" style="min-height: 60vh;">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">Private Club Solutions</div>
+        <h1>Payment System for <span>Private Golf Clubs</span></h1>
+        <p class="hero-subtitle">Sophisticated member management, flexible billing, guest charging, and dining integration for exclusive private clubs.</p>
+        <p class="hero-promise">Member Management • Guest Charging • Club Dining</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">Start Your Demo</button>
+          <button class="btn-outline" onclick="showPage('solution-golf')">Back to Golf Solutions</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-placeholder">[Private Golf Club Image]</div>
+      </div>
+    </div>
+  </div>
+
+  <section style="background: #f6f9fc;">
+    <div class="section-inner">
+      <h2 class="section-title">Private Club <span>Payment Solutions</span></h2>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <h3>👥 Member Management</h3>
+          <p>Membership levels and privileges. Automatic monthly billing. Initiation and assessment fees. Member directory and profiles.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🎯 Guest Charging</h3>
+          <p>Guest fees billed to member accounts. Tee time restrictions. Guest management and tracking. Bring-a-guest promotions.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🍽️ Dining & Clubhouse</h3>
+          <p>Member charging for food and beverages. Point-of-sale integration. Restaurant and bar inventory. Member billing statements.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🏌️ Member Privileges</h3>
+          <p>Discount tracking per membership level. Special privileges and access. Priority tee times. Reciprocal agreements.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📋 Billing & Statements</h3>
+          <p>Detailed monthly statements. Multiple payment methods. Delinquency management. Online member portal.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📊 Club Analytics</h3>
+          <p>Member revenue tracking. Club utilization metrics. Revenue per member. Retention and churn analysis.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner" style="text-align: center;">
+      <h2 class="section-title">Streamline Your <span>Club Operations</span></h2>
+      <p class="section-sub">Private clubs improve member satisfaction with seamless payment and billing systems.</p>
+      <div class="hero-btns" style="justify-content: center; margin-top: 40px;">
+        <button class="btn-primary" onclick="showPage('contact')">Schedule Demo</button>
+        <button class="btn-outline" onclick="showPage('solution-golf')">View All Golf Solutions</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- GOLF SUB-PAGE: RESORT -->
+<div id="page-golf-resort" class="page">
+  <div class="hero" style="min-height: 60vh;">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">Golf Resort Solutions</div>
+        <h1>Payment System for <span>Golf Resorts</span></h1>
+        <p class="hero-subtitle">Luxury golf resorts need seamless integration of lodging, golf, dining, and spa. All-inclusive billing for the ultimate guest experience.</p>
+        <p class="hero-promise">Guest Integration • All-Inclusive • Luxury Experience</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">Start Your Demo</button>
+          <button class="btn-outline" onclick="showPage('solution-golf')">Back to Golf Solutions</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-placeholder">[Golf Resort Image]</div>
+      </div>
+    </div>
+  </div>
+
+  <section style="background: #f6f9fc;">
+    <div class="section-inner">
+      <h2 class="section-title">Luxury Golf Resort <span>Payment Solutions</span></h2>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <h3>🏨 Hotel Integration</h3>
+          <p>Guest billing from hotel system. Room service charges. All resort expenses consolidated. Single checkout experience.</p>
+        </div>
+        <div class="feature-card">
+          <h3>⛳ Golf Package Deals</h3>
+          <p>Golf + lodging bundles. Multi-day tournament packages. Caddie and cart fees. Lesson and clinic charges.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🍽️ Fine Dining</h3>
+          <p>Premium restaurant and bar billing. Course-side beverage service. Special event catering. Wine and spirits management.</p>
+        </div>
+        <div class="feature-card">
+          <h3>💆 Spa & Wellness</h3>
+          <p>Spa treatment booking and billing. Wellness package sales. Instructor fees. Relaxation package bundles.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🎯 Tournament Hosting</h3>
+          <p>Corporate retreat management. Charity event support. Prize distribution. Sponsor coordination and billing.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📊 Resort Analytics</h3>
+          <p>Guest spending by category. Package popularity trends. Revenue optimization. Upsell recommendations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner" style="text-align: center;">
+      <h2 class="section-title">Create the Ultimate <span>Guest Experience</span></h2>
+      <p class="section-sub">Golf resorts increase revenue by 24% with integrated all-inclusive payment systems.</p>
+      <div class="hero-btns" style="justify-content: center; margin-top: 40px;">
+        <button class="btn-primary" onclick="showPage('contact')">Schedule Demo</button>
+        <button class="btn-outline" onclick="showPage('solution-golf')">View All Golf Solutions</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- AGORA RETAIL PLATFORM PAGE -->
+<div id="page-solution-agora" class="page">
+  <div class="hero" style="min-height: 60vh;">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">Retail Management Platform</div>
+        <h1>Agora <span>Retail Platform</span></h1>
+        <p class="hero-subtitle">One system for inventory, sales, payments, and customers. Stop juggling five apps. Manage in-store, online, and marketplace sales from one dashboard.</p>
+        <p class="hero-promise">Unified • Real-Time • Scalable</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">Start Free Trial</button>
+          <button class="btn-outline">View Pricing</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-placeholder">[Agora Retail Platform Dashboard Image]</div>
+      </div>
+    </div>
+  </div>
+
+  <section style="background: #f6f9fc;">
+    <div class="section-inner">
+      <h2 class="section-title">Unified Retail <span>Operating System</span></h2>
+      <p class="section-sub">Inventory doesn't match reality. Customer data is scattered. Payments don't sync. You're managing five apps instead of running your store. Agora fixes all of it.</p>
+
+      <div class="cards-grid">
+        <div class="feature-card">
+          <h3>🛍️ Unified Commerce</h3>
+          <p>In-store, online, and marketplace sales on one dashboard. Inventory syncs automatically. One customer profile everywhere.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📊 Real-Time Analytics</h3>
+          <p>See what's selling, what's not, and why. Dashboards that actually make sense. Decisions based on data, not guesses.</p>
+        </div>
+        <div class="feature-card">
+          <h3>👥 Customer Intelligence</h3>
+          <p>Track purchase history, preferences, lifetime value. Build loyalty programs. Turn customers into repeat buyers.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📱 Mobile-First Control</h3>
+          <p>Manage your store from anywhere. Check inventory while home. Approve orders from your phone. Real-time sales tracking.</p>
+        </div>
+        <div class="feature-card">
+          <h3>⚡ Instant Checkout</h3>
+          <p>Fast transactions mean happy customers. Apple Pay, Google Pay, cards—processed in milliseconds.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🔒 Enterprise Security</h3>
+          <p>PCI DSS Level 1, end-to-end encryption, regular audits. Your customer data is treated like your most valuable asset.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner" style="text-align: center;">
+      <h2 class="section-title">Ready to Transform <span>Your Retail?</span></h2>
+      <p class="section-sub">30 days free. No credit card. No contracts. See the difference.</p>
+      <div class="hero-btns" style="justify-content: center; margin-top: 40px;">
+        <button class="btn-primary" onclick="showPage('contact')">Start Free Trial</button>
+        <button class="btn-outline">Schedule Demo</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- PRICING PAGE -->
+<div id="page-pricing" class="page">
+  <section>
+    <div class="section-inner">
+      <div class="section-label">Simple, Honest Pricing</div>
+      <h2 class="section-title">Pricing That Makes <span>Sense</span></h2>
+      <p class="section-sub">No hidden fees. No quarterly increases. No surprises. Just honest pricing based on what you actually use.</p>
+    </div>
+  </section>
+
+  <section style="background: #f6f9fc;">
+    <div class="section-inner">
+      <div style="background: white; padding: 32px; border-radius: 12px; margin-bottom: 48px; border: 1px solid var(--border);">
+        <h3 style="margin-bottom: 20px; color: var(--text-dark); font-size: 18px;">How We Price</h3>
+        <p style="margin-bottom: 20px; font-size: 15px; color: var(--text-mid); line-height: 1.8;">Most processors hide costs in confusing terms. We don't. Here's exactly what you pay:</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+          <div>
+            <h4 style="color: var(--text-dark); margin-bottom: 8px; font-size: 14px; font-weight: 600;">Interchange</h4>
+            <p style="font-size: 13px; color: var(--text-mid);">What card networks charge. We pass it through at cost, no markup.</p>
+          </div>
+          <div>
+            <h4 style="color: var(--text-dark); margin-bottom: 8px; font-size: 14px; font-weight: 600;">Our Fee: 0.25%</h4>
+            <p style="font-size: 13px; color: var(--text-mid);">Of each transaction. Same for everyone. No negotiating needed.</p>
+          </div>
+          <div>
+            <h4 style="color: var(--text-dark); margin-bottom: 8px; font-size: 14px; font-weight: 600;">Per-Transaction: $0.10</h4>
+            <p style="font-size: 13px; color: var(--text-mid);">Flat rate. No surprises. No variation.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+        <div style="background: white; border: 2px solid var(--border); border-radius: 12px; padding: 40px; text-align: center;">
+          <h3 style="color: var(--text-dark); margin-bottom: 12px;">Starter</h3>
+          <p style="font-size: 13px; color: var(--text-light); margin-bottom: 24px;">For small businesses & solopreneurs</p>
+          <div style="font-size: 40px; font-weight: 700; color: var(--blue); margin-bottom: 8px;">0.25%</div>
+          <p style="font-size: 13px; color: var(--text-light); margin-bottom: 32px;">+ $0.10 per transaction</p>
+          <button class="btn-primary" onclick="showPage('contact')" style="width: 100%;">Get Started</button>
+        </div>
+
+        <div style="background: white; border: 2px solid var(--blue); border-radius: 12px; padding: 40px; text-align: center; box-shadow: var(--shadow-lg); position: relative;">
+          <div style="background: var(--blue); color: white; padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; display: inline-block; margin-bottom: 16px; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);">MOST POPULAR</div>
+          <h3 style="color: var(--text-dark); margin-bottom: 12px; margin-top: 12px;">Professional</h3>
+          <p style="font-size: 13px; color: var(--text-light); margin-bottom: 24px;">For growing businesses</p>
+          <div style="font-size: 40px; font-weight: 700; color: var(--blue); margin-bottom: 8px;">0.20%</div>
+          <p style="font-size: 13px; color: var(--text-light); margin-bottom: 32px;">+ $0.10 per transaction</p>
+          <button class="btn-primary" onclick="showPage('contact')" style="width: 100%;">Get Started</button>
+        </div>
+
+        <div style="background: white; border: 2px solid var(--border); border-radius: 12px; padding: 40px; text-align: center;">
+          <h3 style="color: var(--text-dark); margin-bottom: 12px;">Enterprise</h3>
+          <p style="font-size: 13px; color: var(--text-light); margin-bottom: 24px;">For large operations</p>
+          <div style="font-size: 40px; font-weight: 700; color: var(--blue); margin-bottom: 8px;">Custom</div>
+          <p style="font-size: 13px; color: var(--text-light); margin-bottom: 32px;">Based on your volume</p>
+          <button class="btn-outline" onclick="showPage('contact')" style="width: 100%;">Talk to Sales</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ABOUT PAGE -->
+<div id="page-about" class="page">
+  <section>
+    <div class="section-inner">
+      <div class="section-label">Our Story</div>
+      <h2 class="section-title">About <span>PioneerEpay</span></h2>
+      <p class="section-sub">We started because payment processing was broken. We're fixing it.</p>
+    </div>
+  </section>
+
+  <section style="background: #f6f9fc;">
+    <div class="section-inner">
+      <h3 style="color: var(--text-dark); margin-bottom: 24px; font-size: 20px;">Our Mission</h3>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">In 2017, our founders were running their own businesses and watching processors make millions off hidden fees and arbitrary rate increases. They got frustrated and decided to build what they wished existed.</p>
+      
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">Today, PioneerEpay serves thousands of restaurants, retail shops, healthcare providers, non-profits, entertainment venues, and golf courses across North America. We've processed over $15 billion in transactions with a 99.99% uptime guarantee.</p>
+      
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8;">We don't answer to venture capitalists. We answer to the entrepreneurs and team members who trust us with their transactions. That's why we lock in pricing forever, offer 24/7 human support, and never require contracts.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner">
+      <h3 style="color: var(--text-dark); margin-bottom: 40px; font-size: 20px;">What We Stand For</h3>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <h3>💡 Radical Transparency</h3>
+          <p>No hidden fees. No negotiating. Same price for everyone. Ever. What you see is what you get.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🤝 Support That Cares</h3>
+          <p>Real humans answer the phone. Engineers, not outsourced support. We fix problems because they're our problems too.</p>
+        </div>
+        <div class="feature-card">
+          <h3>💼 Built by Operators</h3>
+          <p>Our team has run the businesses you run. Restaurants, retail, salons, golf courses. We understand your challenges because we've lived them.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🚀 Speed Matters</h3>
+          <p>Real-time settlements, instant support, next-day onboarding. Fast isn't a feature—it's our baseline.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- CONTACT PAGE -->
+<div id="page-contact" class="page contact-section">
+  <section>
+    <div class="section-inner">
+      <div class="section-label">Let's Talk</div>
+      <h2 class="section-title">Get Started <span>Today</span></h2>
+      <p class="section-sub">Questions? Ready to switch? Our team responds in minutes, not days.</p>
+
+      <div class="form-container">
+        <div class="form-message" id="formMessage"></div>
+
+        <form id="contactForm" onsubmit="handleFormSubmit(event)">
+          <div class="form-group">
+            <label for="name">Full Name *</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone">
+          </div>
+
+          <div class="form-group">
+            <label for="company">Company Name</label>
+            <input type="text" id="company" name="company">
+          </div>
+
+          <div class="form-group">
+            <label for="subject">What's This About? *</label>
+            <select id="subject" name="subject" required>
+              <option value="">Select a topic</option>
+              <option value="payments">Credit Card Processing</option>
+              <option value="pos">POS System</option>
+              <option value="capital">Business Capital</option>
+              <option value="food">Food & Beverage</option>
+              <option value="hospitality">Hospitality</option>
+              <option value="lodging">Lodging</option>
+              <option value="spa">Spa & Salon</option>
+              <option value="sports">Sports & Entertainment</option>
+              <option value="golf">Golf Course</option>
+              <option value="retail">Retail</option>
+              <option value="ticketing">Ticketing Solutions</option>
+              <option value="api">API Integration</option>
+              <option value="support">Technical Support</option>
+              <option value="switch">Switch from Competitor</option>
+              <option value="other">Something Else</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Tell Us What's On Your Mind *</label>
+            <textarea id="message" name="message" required placeholder="Current processor? Annual volume? Timeline? We need details to help best."></textarea>
+          </div>
+
+          <div class="form-checkbox">
+            <input type="checkbox" id="newsletter" name="newsletter">
+            <label for="newsletter">Keep me updated on PioneerEpay product launches and case studies</label>
+          </div>
+
+          <button type="submit" class="form-submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: white;">
+    <div class="section-inner">
+      <h2 class="section-title" style="margin-bottom: 40px;">Other Ways to <span>Reach Us</span></h2>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <h3>📧 Email</h3>
+          <p><a href="mailto:hello@pioneerepay.com" style="color: var(--blue); font-weight: 600;">hello@pioneerepay.com</a></p>
+          <p style="font-size: 13px; color: var(--text-light); margin-top: 12px;">Response usually within 1 hour</p>
+        </div>
+        <div class="feature-card">
+          <h3>📞 Sales Hotline</h3>
+          <p><a href="tel:+18007467837" style="color: var(--blue); font-weight: 600;">1-800-PIONEER</a></p>
+          <p style="font-size: 13px; color: var(--text-light); margin-top: 12px;">Monday-Friday 8 AM - 6 PM CT</p>
+        </div>
+        <div class="feature-card">
+          <h3>💬 Live Chat</h3>
+          <p>Available on our site during business hours</p>
+          <p style="font-size: 13px; color: var(--text-light); margin-top: 12px;">Usually 2-3 minute response</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
 <footer>
-    <p>&copy; 2026 PioneerEpay. All rights reserved.</p>
-    <p>Email: hello@pioneerepay.com | Phone: 1-800-336-1257</p>
+  <div class="footer-content">
+    <div class="footer-col">
+      <div class="logo" style="margin-bottom: 16px; cursor: pointer;" onclick="showPage('home')">
+        <span style="color: #00a8e8;">Pioneer</span><div class="logo-icon" style="width: 32px; height: 32px; font-size: 14px;">e</div><span style="color: var(--gold);">pay</span>
+      </div>
+      <p class="footer-desc">Real-time payment processing for restaurants, retail, healthcare, spas, golf courses, and nonprofits. Transparent pricing. Human support. Since 2017.</p>
+      <div style="display:flex;gap:12px;">
+        <a href="#" style="color:rgba(255,255,255,0.4); font-size:13px; transition:color 0.2s;">LinkedIn</a>
+        <a href="#" style="color:rgba(255,255,255,0.4); font-size:13px; transition:color 0.2s;">Twitter</a>
+        <a href="#" style="color:rgba(255,255,255,0.4); font-size:13px; transition:color 0.2s;">Facebook</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Industries</h4>
+      <ul>
+        <li><a onclick="showPage('industry-food')">Food & Beverage</a></li>
+        <li><a onclick="showPage('industry-hospitality')">Hospitality</a></li>
+        <li><a onclick="showPage('industry-lodging')">Lodging</a></li>
+        <li><a onclick="showPage('industry-spa')">Spa & Salon</a></li>
+        <li><a onclick="showPage('industry-sports')">Sports & Entertainment</a></li>
+        <li><a onclick="showPage('industry-healthcare')">Healthcare</a></li>
+        <li><a onclick="showPage('industry-retail')">Retail</a></li>
+        <li><a onclick="showPage('industry-nonprofit')">Non-Profits</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Solutions</h4>
+      <ul>
+        <li><a onclick="showPage('solution-pos')">POS Systems</a></li>
+        <li><a onclick="showPage('solution-payments')">Payment Processing</a></li>
+        <li><a onclick="showPage('solution-gateway')">Payment Gateway</a></li>
+        <li><a onclick="showPage('solution-capital')">Business Capital</a></li>
+        <li><a onclick="showPage('solution-analytics')">Analytics</a></li>
+        <li><a onclick="showPage('solution-ticketing')">Ticketing</a></li>
+        <li><a onclick="showPage('solution-golf')">Golf Solutions</a></li>
+        <li><a onclick="showPage('solution-agora')">Agora Retail</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a onclick="showPage('about')">About Us</a></li>
+        <li><a onclick="showPage('pricing')">Pricing</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a onclick="showPage('contact')">Contact</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="https://www.tuna-pos.com" target="_blank">TunaPos</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copyright">© 2026 PioneerEpay. We're a wholly owned subsidiary of Pioneer Enterprise Solutions, Inc., built to stay independent and focused on serving your business. All other trademarks are property of their respective owners.</p>
+  </div>
 </footer>
-
-</body>
-</html>
