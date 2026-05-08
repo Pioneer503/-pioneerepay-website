@@ -4,6 +4,630 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PioneerEpay - Real-Time Payment Processing</title>
+    <style>
+        :root {
+            --blue: #00a8e8;
+            --gold: #ffc857;
+            --text-dark: #1a1a1a;
+            --text-mid: #555;
+            --text-light: #999;
+            --border: #e5e5e5;
+            --bg-light: #f6f9fc;
+            --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background: white;
+        }
+
+        .nav-top-bar {
+            background: var(--text-dark);
+            color: white;
+            padding: 12px 20px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .nav-top-bar a {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--gold);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-menu a,
+        .nav-dropdown > span {
+            color: var(--text-mid);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .nav-menu a:hover,
+        .nav-dropdown > span:hover {
+            color: var(--blue);
+        }
+
+        .nav-dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 0;
+            min-width: 200px;
+            box-shadow: var(--shadow-lg);
+            margin-top: 8px;
+            z-index: 101;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: var(--text-mid);
+            text-decoration: none;
+            font-size: 13px;
+            transition: background 0.2s;
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--bg-light);
+            color: var(--blue);
+        }
+
+        .tunapos-link {
+            background: rgba(255, 200, 87, 0.1);
+            padding: 6px 12px;
+            border-radius: 4px;
+            color: var(--gold) !important;
+            font-weight: 600;
+        }
+
+        .nav-cta {
+            background: var(--blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .nav-cta:hover {
+            background: #0096c7;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: var(--text-dark);
+            margin: 6px 0;
+            transition: 0.3s;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .hero {
+            padding: 80px 40px;
+            background: white;
+        }
+
+        .hero-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(0, 168, 232, 0.1);
+            color: var(--blue);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-size: 48px;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            color: var(--text-dark);
+        }
+
+        h1 span {
+            color: var(--blue);
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+            color: var(--text-mid);
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .hero-promise {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gold);
+            margin-bottom: 32px;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 16px;
+        }
+
+        .btn-primary {
+            background: var(--blue);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: #0096c7;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--blue);
+            border: 2px solid var(--blue);
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-outline:hover {
+            background: rgba(0, 168, 232, 0.1);
+        }
+
+        .hero-card {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 60px;
+            text-align: center;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-card-placeholder {
+            color: var(--text-light);
+            font-size: 14px;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .trust-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            background: var(--bg-light);
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            text-align: left;
+        }
+
+        .trust-icon {
+            font-size: 28px;
+        }
+
+        .trust-item span {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        section {
+            padding: 80px 40px;
+        }
+
+        .section-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            color: var(--blue);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 42px;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+
+        .section-title span {
+            color: var(--blue);
+        }
+
+        .section-sub {
+            font-size: 16px;
+            color: var(--text-mid);
+            margin-bottom: 48px;
+            max-width: 600px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: var(--text-mid);
+            line-height: 1.8;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 48px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .form-message {
+            padding: 16px;
+            margin-bottom: 24px;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .form-message.success {
+            display: block;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .form-message.error {
+            display: block;
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--blue);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .form-checkbox input {
+            width: auto;
+        }
+
+        .form-checkbox label {
+            margin: 0;
+            font-weight: 500;
+            font-size: 13px;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 14px;
+            background: var(--blue);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .form-submit:hover {
+            background: #0096c7;
+        }
+
+        footer {
+            background: var(--text-dark);
+            color: white;
+            padding: 60px 40px 40px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-col h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul li a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 13px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+        }
+
+        .footer-desc {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .footer-social a {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-social a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            text-align: center;
+        }
+
+        .footer-copyright {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 16px 20px;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: white;
+                border-bottom: 1px solid var(--border);
+                padding: 20px;
+                gap: 0;
+                z-index: 99;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .nav-menu a,
+            .nav-dropdown > span {
+                padding: 12px 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero-inner {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .hero-btns {
+                flex-direction: column;
+            }
+
+            .trust-bar {
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -26,8 +650,7 @@
       <span onclick="toggleDropdown(event, 'industriesDropdown')">Industries</span>
       <div class="dropdown-menu" id="industriesDropdown">
         <a onclick="showPage('industry-food'); closeMenu()">🍽️ Food & Beverage</a>
-        <a onclick="showPage('industry-hospitality'); closeMenu()">🏨 Hospitality</a>
-        <a onclick="showPage('industry-lodging'); closeMenu()">🏩 Lodging</a>
+        <a onclick="showPage('industry-lodging'); closeMenu()">🏨 Lodging & Resorts</a>
         <a onclick="showPage('industry-spa'); closeMenu()">💆 Spa & Salon</a>
         <a onclick="showPage('industry-sports'); closeMenu()">⚽ Sports & Entertainment</a>
         <a onclick="showPage('industry-healthcare'); closeMenu()">⚕️ Healthcare</a>
@@ -47,13 +670,14 @@
         <a onclick="showPage('solution-analytics'); closeMenu()">📊 Analytics & Reporting</a>
         <a onclick="showPage('solution-ticketing'); closeMenu()">🎫 Ticketing Solutions</a>
         <a onclick="showPage('solution-golf'); closeMenu()">⛳ Golf Solutions</a>
-        <a onclick="showPage('solution-agora'); closeMenu()">🛒 Agora Retail</a>
+        <a href="https://agora-retail.com" target="_blank" style="color: var(--gold); font-weight: 600;">🛒 Agora Retail</a>
       </div>
     </div>
 
     <a onclick="showPage('pricing'); closeMenu()">Pricing</a>
     <a onclick="showPage('about'); closeMenu()">About Us</a>
     <a class="tunapos-link" href="https://www.tuna-pos.com" target="_blank">TunaPos</a>
+    <a class="tunapos-link" href="https://agora-retail.com" target="_blank">Agora Retail</a>
     <button class="nav-cta" onclick="showPage('contact'); closeMenu()">Get Started</button>
   </div>
   <button class="hamburger" onclick="toggleMenu()">
@@ -63,18 +687,18 @@
   </button>
 </nav>
 
-<!-- HOME PAGE (keeping original) -->
+<!-- HOME PAGE -->
 <div id="page-home" class="page active">
   <div class="hero">
     <div class="hero-inner">
       <div>
-        <div class="hero-badge">Founded 2017 · Proven Track Record</div>
-        <h1>Accept Payments <span>Wherever Your<br>Business Takes You</span></h1>
-        <p class="hero-subtitle">Whether your customers pay in person, online, or on the go, you can keep everything in one place—making it simple to track payments and stay on top of your finances.</p>
-        <p class="hero-promise">Unified • Real-Time • Always Available</p>
+        <div class="hero-badge">Founded 2017 · 50K+ Merchants · $2.3B Processed</div>
+        <h1>Lower Rates.<br>Faster Payouts.<br><span>Zero Contracts.</span></h1>
+        <p class="hero-subtitle">They charge 2.87%. We charge 0.25%. A $100K/month restaurant saves $2,620 every single month—$31,440/year. That's your money. Take it back.</p>
+        <p class="hero-promise">Real-Time Settlements • Human Support • Zero Contracts</p>
         <div class="hero-btns">
-          <button class="btn-primary" onclick="showPage('contact')">Accept Payments Today</button>
-          <button class="btn-outline" onclick="showPage('solution-payments')">See All Payment Options</button>
+          <button class="btn-primary" onclick="showPage('pricing')">See the Savings</button>
+          <button class="btn-outline" onclick="showPage('contact')">Talk to Sales</button>
         </div>
       </div>
       <div class="hero-card">
@@ -104,33 +728,367 @@
 
   <section style="background: #f6f9fc;">
     <div class="section-inner">
-      <div class="section-label">Why Businesses Switch to PioneerEpay</div>
-      <h2 class="section-title">The Payment Processor That <span>Actually Works</span></h2>
-      <p class="section-sub">We've been trusted by restaurants, retail, healthcare, and beyond. Here's what sets us apart.</p>
+      <div class="section-label">Why Thousands of Businesses Have Switched</div>
+      <h2 class="section-title">Built by Operators, <span>Not Bankers</span></h2>
+      <p class="section-sub">In 2017, our founders were running their own businesses when they got hit with a 0.3% surprise rate increase from their processor. We decided to build something better—and we've been proving it ever since.</p>
       <div class="cards-grid">
         <div class="feature-card">
-          <h3>💰 Real-Time Money</h3>
-          <p>See transactions settle instantly instead of waiting 3-5 business days. Cash in your account when you need it, not when a competitor decides to send it.</p>
+          <h3>💰 Real Money, Today</h3>
+          <p>Most processors settle in 2-3 business days. We settle in hours. On a $50K/month volume, that's an extra $600/month in cash flow. $7,200/year. That's money you can use now.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🎯 Price Locked Forever</h3>
+          <p>0.25% + $0.10 per transaction. Year one. Year ten. We don't raise rates. We don't have "enterprise tiers." No hidden fees. Same transparent pricing, always. Save thousands every year on processing.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🚀 Leave Whenever You Want</h3>
+          <p>Month-to-month. Cancel anytime. Most processors lock you in 2-3 years with termination fees. Not us. We keep you because we're genuinely better, not because you can't leave.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🏪 Built for REAL Businesses</h3>
+          <p>We didn't build one processor and force it on every industry. We built separate solutions for 7 different business types. A hair salon needs different features than a golf course. We engineered it right.</p>
+        </div>
+        <div class="feature-card">
+          <h3>👥 A Person Answers the Phone</h3>
+          <p>Call us. An actual human picks up. 24/7. Not a ticket system. Not a chatbot. A person who understands your business because they've run one. That's customer service.</p>
+        </div>
+        <div class="feature-card">
+          <h3>⚙️ Works With Everything You Have</h3>
+          <p>We integrate with Square, Shopify, QuickBooks, and 50+ other platforms. Use what you already have. No forced upgrades. No vendor lock-in. Your choice, your way.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- POS SYSTEMS PAGE -->
+<div id="page-solution-pos" class="page">
+  <div class="hero" style="min-height: 60vh;">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">Point of Sale Solutions</div>
+        <h1>Complete <span>POS System</span></h1>
+        <p class="hero-subtitle">Manage inventory, process payments, track sales, and build customer loyalty from one intuitive platform.</p>
+        <p class="hero-promise">Inventory • Real-Time Sales • Customer Management</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">Start Your Demo</button>
+          <button class="btn-outline" onclick="showPage('solution-payments')">Compare Solutions</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-placeholder">[POS System Dashboard]</div>
+      </div>
+    </div>
+  </div>
+
+  <section style="background: #f6f9fc;">
+    <div class="section-inner">
+      <h2 class="section-title">Powerful <span>POS Features</span></h2>
+      <p class="section-sub">Everything you need to run your business efficiently.</p>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <h3>📦 Inventory Management</h3>
+          <p>Real-time inventory tracking across all locations. Automatic low-stock alerts. Perfect for retail and food businesses.</p>
+        </div>
+        <div class="feature-card">
+          <h3>💳 Lightning-Fast Payments</h3>
+          <p>Process credit cards, debit, digital wallets, and cash in seconds. EMV-compliant and secure.</p>
+        </div>
+        <div class="feature-card">
+          <h3>👥 Customer Profiles</h3>
+          <p>Build customer relationships with purchase history, preferences, and loyalty rewards.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📊 Sales Analytics</h3>
+          <p>Real-time dashboards showing sales trends, top products, peak hours, and staff performance.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🏪 Multi-Location Management</h3>
+          <p>Manage multiple stores from one dashboard. Consolidated reporting and unified customer database.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📱 Mobile & Tablet Support</h3>
+          <p>Full POS functionality on iPad, Android tablets, or mobile devices. Works online and offline.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner" style="text-align: center;">
+      <h2 class="section-title">Ready to Upgrade Your <span>POS?</span></h2>
+      <p class="section-sub">Modern POS systems increase transaction speed by 40%.</p>
+      <div class="hero-btns" style="justify-content: center; margin-top: 40px;">
+        <button class="btn-primary" onclick="showPage('contact')">Schedule Demo</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- PAYMENT PROCESSING PAGE -->
+<div id="page-solution-payments" class="page">
+  <div class="hero" style="min-height: 60vh;">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">Payment Processing</div>
+        <h1>Accept <span>Every Payment Type</span></h1>
+        <p class="hero-subtitle">Credit cards, debit cards, ACH, digital wallets, and more. Process payments in-person, online, or on-the-go.</p>
+        <p class="hero-promise">Real-Time Settlements • Low Rates • Maximum Security</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">Get Started</button>
+          <button class="btn-outline" onclick="showPage('pricing')">View Pricing</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-placeholder">[Payment Processing Illustration]</div>
+      </div>
+    </div>
+  </div>
+
+  <section style="background: #f6f9fc;">
+    <div class="section-inner">
+      <h2 class="section-title">Payment Solutions for <span>Every Channel</span></h2>
+      <p class="section-sub">Accept payments the way your customers want to pay.</p>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <h3>🏪 In-Person Payments</h3>
+          <p>Card readers, tap payments, and contactless options. Mobile terminals for anywhere in your store.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🌐 Online Payments</h3>
+          <p>Secure checkout for e-commerce. PayPal, Stripe, Square integration. One-click payments for repeat customers.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📱 Mobile Payments</h3>
+          <p>Accept payments on your phone or tablet. Perfect for roaming staff, food trucks, or pop-up shops.</p>
+        </div>
+        <div class="feature-card">
+          <h3>💰 ACH & Bank Transfers</h3>
+          <p>Direct bank transfers for B2B payments. Lower rates on recurring transactions.</p>
+        </div>
+        <div class="feature-card">
+          <h3>💳 Digital Wallets</h3>
+          <p>Apple Pay, Google Pay, Samsung Pay. One-touch payments from any device.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🔐 PCI Compliance</h3>
+          <p>PCI DSS Level 1 certified. End-to-end encryption. Your customers' data is safe with us.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- PAYMENT GATEWAY PAGE -->
+<div id="page-solution-gateway" class="page">
+  <div class="hero" style="min-height: 60vh;">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">Payment Gateway</div>
+        <h1>API-First <span>Payment Gateway</span></h1>
+        <p class="hero-subtitle">Powerful, flexible payment processing for developers. RESTful API, webhooks, and comprehensive documentation.</p>
+        <p class="hero-promise">Developer-Friendly • Scalable • Real-Time</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">Get API Keys</button>
+          <button class="btn-outline">View Documentation</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-placeholder">[API Documentation]</div>
+      </div>
+    </div>
+  </div>
+
+  <section style="background: #f6f9fc;">
+    <div class="section-inner">
+      <h2 class="section-title">Developer-Friendly <span>Payment Gateway</span></h2>
+      <p class="section-sub">Build custom payment solutions with our powerful API.</p>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <h3>🔌 RESTful API</h3>
+          <p>Simple, modern API design. JSON payloads. Language agnostic. SDKs for Node.js, Python, Ruby, Go, and more.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🔄 Webhooks</h3>
+          <p>Real-time event notifications. Instant updates on payments, refunds, and disputes. Retry logic built-in.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📊 Dashboard</h3>
+          <p>Real-time transaction data. Detailed reporting. API usage analytics. Integration testing tools.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🔐 Security First</h3>
+          <p>OAuth 2.0 authentication. Rate limiting. Encryption. PCI compliant. Regular security audits.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🚀 Scalable Infrastructure</h3>
+          <p>Handle millions of transactions per day. 99.99% uptime SLA. Auto-scaling for peak loads.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📚 Documentation</h3>
+          <p>Comprehensive API docs. Code examples. Live API explorer. Sandbox environment for testing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- BUSINESS CAPITAL PAGE -->
+<div id="page-solution-capital" class="page">
+  <div class="hero" style="min-height: 60vh;">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">Business Capital Solutions</div>
+        <h1>Get <span>Funding Fast</span></h1>
+        <p class="hero-subtitle">Access capital based on your sales performance. Quick approvals, flexible terms, transparent rates.</p>
+        <p class="hero-promise">Fast Approval • Flexible Terms • Transparent Pricing</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">Apply Now</button>
+          <button class="btn-outline">View Terms</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-placeholder">[Capital Solutions Illustration]</div>
+      </div>
+    </div>
+  </div>
+
+  <section style="background: #f6f9fc;">
+    <div class="section-inner">
+      <h2 class="section-title">Capital for <span>Business Growth</span></h2>
+      <p class="section-sub">Grow without the hassle of traditional bank loans.</p>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <h3>⚡ Quick Approvals</h3>
+          <p>Apply in minutes. Get approved in hours. Funding in your account within 24-48 hours.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📊 Performance-Based</h3>
+          <p>Funding amounts based on your sales history. The better you do, the more access you get.</p>
+        </div>
+        <div class="feature-card">
+          <h3>💰 Flexible Terms</h3>
+          <p>Choose repayment terms that work for you. Daily, weekly, or monthly repayment options.</p>
         </div>
         <div class="feature-card">
           <h3>🎯 Transparent Pricing</h3>
-          <p>No quarterly rate increases. No hidden fees buried in statements. Just 0.25% + $0.10. Same price for everyone, forever.</p>
+          <p>No hidden fees. Know exactly what you'll repay. Simple, straightforward rate structure.</p>
         </div>
         <div class="feature-card">
-          <h3>🚀 No Contracts, No Tricks</h3>
-          <p>Cancel anytime. We don't trap you with 3-year commitments or early termination fees. We keep you because we're better, not because you can't leave.</p>
+          <h3>📈 Scale Your Needs</h3>
+          <p>Increase your funding limit as your business grows. More access as you prove yourself.</p>
         </div>
         <div class="feature-card">
-          <h3>🏢 Built for Your Business</h3>
-          <p>Whether you're a $50K/month salon or a $5M/year retail chain, we have solutions that fit. No "enterprise only" pricing tiers.</p>
+          <h3>🚀 Grow Your Business</h3>
+          <p>Invest in inventory, marketing, hiring. Capital to scale faster than waiting for profits.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ANALYTICS PAGE -->
+<div id="page-solution-analytics" class="page">
+  <div class="hero" style="min-height: 60vh;">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">Analytics & Reporting</div>
+        <h1>Data-Driven <span>Business Insights</span></h1>
+        <p class="hero-subtitle">Real-time dashboards, detailed reports, and actionable insights to grow your business faster.</p>
+        <p class="hero-promise">Real-Time • Actionable • Easy to Understand</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">See Demo</button>
+          <button class="btn-outline" onclick="showPage('pricing')">Get Started</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-placeholder">[Analytics Dashboard]</div>
+      </div>
+    </div>
+  </div>
+
+  <section style="background: #f6f9fc;">
+    <div class="section-inner">
+      <h2 class="section-title">Understand Your <span>Business Performance</span></h2>
+      <p class="section-sub">Data visualization and insights that actually matter.</p>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <h3>📊 Real-Time Dashboards</h3>
+          <p>See your business metrics as they happen. Sales trends, payment performance, customer behavior.</p>
         </div>
         <div class="feature-card">
-          <h3>👥 Real Human Support</h3>
-          <p>Call us. A person answers. Not a robot, not a menu tree. Engineers and operations experts available 24/7 to help you.</p>
+          <h3>💹 Sales Analytics</h3>
+          <p>Track revenue by product, category, location, or time period. Identify your top performers.</p>
         </div>
         <div class="feature-card">
-          <h3>⚙️ Works With Your Setup</h3>
-          <p>Seamless integration with Square, Toast, Shopify, QuickBooks, or your existing system. One API, unlimited possibilities.</p>
+          <h3>👥 Customer Insights</h3>
+          <p>Understand your customers better. Purchase patterns, lifetime value, retention rates.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📈 Forecasting Tools</h3>
+          <p>Predict future sales based on historical data. Plan inventory and staffing confidently.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📋 Custom Reports</h3>
+          <p>Build your own reports. Export to Excel, PDF, or schedule automated deliveries via email.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🎯 Benchmarking</h3>
+          <p>Compare your performance to industry standards. See where you stand and where to improve.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- TICKETING PAGE -->
+<div id="page-solution-ticketing" class="page">
+  <div class="hero" style="min-height: 60vh;">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">Event & Ticketing Solutions</div>
+        <h1>Ticketing <span>Made Simple</span></h1>
+        <p class="hero-subtitle">Sell tickets online or at the gate. Manage attendees, send confirmations, and track revenue in real-time.</p>
+        <p class="hero-promise">Easy to Use • Secure • Real-Time Reporting</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">Start Selling Tickets</button>
+          <button class="btn-outline">View Features</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-placeholder">[Ticketing Platform]</div>
+      </div>
+    </div>
+  </div>
+
+  <section style="background: #f6f9fc;">
+    <div class="section-inner">
+      <h2 class="section-title">Ticketing Solutions for <span>Any Event</span></h2>
+      <p class="section-sub">From small shows to large festivals, we've got your ticketing covered.</p>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <h3>🎫 Online Ticketing</h3>
+          <p>Sell tickets on your website. Automated confirmations and ticket delivery via email.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🎪 Multiple Ticket Types</h3>
+          <p>General admission, VIP, group discounts, early bird pricing. Customize for your event.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📱 Mobile Tickets</h3>
+          <p>Digital tickets on mobile devices. QR codes for gate scanning. No printing required.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🚪 Entry Management</h3>
+          <p>Scan tickets at the door. Track attendance in real-time. Manage capacity automatically.</p>
+        </div>
+        <div class="feature-card">
+          <h3>💰 Revenue Tracking</h3>
+          <p>Real-time revenue reports. Track sales channels. Monitor ticket inventory.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🌐 White-Label Options</h3>
+          <p>Brand the ticketing platform as your own. Custom domain and branding available.</p>
         </div>
       </div>
     </div>
@@ -207,49 +1165,73 @@
   <div class="hero" style="min-height: 60vh;">
     <div class="hero-inner">
       <div>
-        <div class="hero-badge">Vacation Rental & Lodging Solutions</div>
-        <h1>Payment Processing for <span>Lodging Businesses</span></h1>
-        <p class="hero-subtitle">Vacation rentals, B&Bs, and alternative lodging need flexible payments. Handle deposits, cleaning fees, damage charges, and multi-currency transactions effortlessly.</p>
-        <p class="hero-promise">Deposit Management • Multi-Currency • Flexible Terms</p>
+        <div class="hero-badge">Lodging & Resort Solutions</div>
+        <h1>Payment System for <span>Hotels, Resorts & Vacation Rentals</span></h1>
+        <p class="hero-subtitle">Hotels managing multiple departments. Resorts handling group bookings. Vacation rentals automating deposits. One system handles all of it—from folio management to security deposits to multi-currency payments.</p>
+        <p class="hero-promise">Unified Billing • Global Payments • Automation</p>
         <div class="hero-btns">
           <button class="btn-primary" onclick="showPage('contact')">Start Your Demo</button>
           <button class="btn-outline" onclick="showPage('solution-payments')">View All Solutions</button>
         </div>
       </div>
       <div class="hero-card">
-        <div class="hero-card-placeholder">[Vacation Rental Payment System Image]</div>
+        <div class="hero-card-placeholder">[Lodging Payment System Image]</div>
       </div>
     </div>
   </div>
 
   <section style="background: #f6f9fc;">
     <div class="section-inner">
-      <h2 class="section-title">Built for <span>Vacation Rentals & Lodging</span></h2>
-      <p class="section-sub">From vacation rental platforms to B&Bs, manage complex payment scenarios with ease.</p>
+      <h2 class="section-title">Built for <span>All Lodging Types</span></h2>
+      <p class="section-sub">Whether you manage a luxury resort, boutique hotel, or Airbnb portfolio—your payment system should work for YOUR business model.</p>
       <div class="cards-grid">
         <div class="feature-card">
-          <h3>🔐 Secure Deposits</h3>
-          <p>Collect security deposits at booking. Hold funds safely. Auto-refund after checkout if no damage. Dispute resolution built-in.</p>
+          <h3>🏨 Unified Guest Folio</h3>
+          <p>Every charge (room, F&B, spa, parking, laundry, activities) consolidated on one guest bill. Hotel guests see itemized folio. Checkout happens in minutes, not 15 minutes of manual reconciliation.</p>
         </div>
         <div class="feature-card">
-          <h3>💰 Multi-Fee Management</h3>
-          <p>Nightly rates, cleaning fees, service fees, damage charges—all handled automatically. Itemized invoices sent to guests. Flexible pricing rules.</p>
+          <h3>🔐 Smart Security Deposits</h3>
+          <p>Collect deposits at booking for vacation rentals. Hold funds safely. Auto-refund 48 hours after checkout if no damage. Partial holds for claimed damage. Dispute resolution built-in.</p>
         </div>
         <div class="feature-card">
-          <h3>🌍 Multi-Currency Support</h3>
-          <p>Accept payments in 30+ currencies. Real-time exchange rates. Settle in your local currency. Global guest support.</p>
+          <h3>💰 Dynamic Pricing & Fees</h3>
+          <p>Hotels: room rates, daily charges, incidentals. Vacation rentals: nightly rates + cleaning + service fees. All calculated automatically. Itemized invoices sent to guests upfront.</p>
         </div>
         <div class="feature-card">
-          <h3>📱 Guest Portal</h3>
-          <p>Guests pay online before arrival. Contactless check-in available. Digital key access integration. Automated reminders and receipts.</p>
+          <h3>🌍 Global Multi-Currency</h3>
+          <p>Accept payments in 30+ currencies. Real-time exchange rates. Settle in your local currency. Support international guests seamlessly. No currency conversion headaches.</p>
         </div>
         <div class="feature-card">
-          <h3>🛎️ Integrated Messaging</h3>
-          <p>Send payment reminders and receipts via SMS and email. Guest support messaging in one place. Automated follow-ups post-stay.</p>
+          <h3>👥 Group & Corporate Billing</h3>
+          <p>Handle group reservations with master folios. Corporate billing by cost center. Split billing between multiple guests. Automated routing per agreement.</p>
         </div>
         <div class="feature-card">
-          <h3>📊 Occupancy Analytics</h3>
-          <p>Track occupancy rates and revenue per property. Seasonal pricing optimization. Competitor benchmarking. Forecasting tools.</p>
+          <h3>📱 Self-Service Guest Portal</h3>
+          <p>Guests pay online before arrival. Contactless check-in. Digital key access. View itemized charges. Ask questions in real-time. No phone calls needed.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🍽️ F&B & Services Integration</h3>
+          <p>Restaurant, bar, room service, spa, activities—all charge to guest account. Kitchen gets orders instantly. Inventory syncs automatically. No manual reconciliation.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📧 Automated Guest Communications</h3>
+          <p>Pre-arrival payment reminders. Post-checkout follow-ups. Damage assessment forms. Review requests. All triggered automatically by booking stage.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📊 Revenue & Occupancy Analytics</h3>
+          <p>Track occupancy, RevPAR, ADR by property. Seasonal trends and forecasting. Competitor benchmarking. F&B margins by outlet. Optimize pricing dynamically.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🏢 Multi-Property Management</h3>
+          <p>Manage 5 properties or 50 from one dashboard. Compare performance across locations. Consolidated financial reporting. Corporate-level visibility.</p>
+        </div>
+        <div class="feature-card">
+          <h3>⚡ Real-Time Settlements</h3>
+          <p>Deposits settle in hours, not days. Guest charges settle overnight. Cash flow exactly when you need it. No waiting for money.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🔒 Secure & Compliant</h3>
+          <p>PCI DSS Level 1 certified. End-to-end encryption. Fraud detection. Chargeback management. Your guests' data is protected.</p>
         </div>
       </div>
     </div>
@@ -257,24 +1239,323 @@
 
   <section>
     <div class="section-inner" style="text-align: center;">
-      <h2 class="section-title">Maximize Your <span>Rental Revenue</span></h2>
-      <p class="section-sub">Lodging businesses increase revenue by 22% with smart payment and pricing strategies.</p>
+      <h2 class="section-title">Streamline Guest Experience <span>& Revenue</span></h2>
+      <p class="section-sub">Hotels reduce checkout time by 60%. Vacation rental owners spend 10 hours/week less on payment processing. Revenue increases 22% with automation.</p>
       <div class="hero-btns" style="justify-content: center; margin-top: 40px;">
-        <button class="btn-primary" onclick="showPage('contact')">Get Started</button>
-        <button class="btn-outline">Download Best Practices</button>
+        <button class="btn-primary" onclick="showPage('contact')">Schedule Demo</button>
+        <button class="btn-outline">Download Best Practices Guide</button>
       </div>
     </div>
   </section>
 </div>
 
-<!-- GOLF SOLUTIONS MAIN PAGE -->
+<!-- SPORTS & ENTERTAINMENT INDUSTRY PAGE -->
+<div id="page-industry-sports" class="page">
+  <div class="hero" style="min-height: 60vh;">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">Sports & Entertainment Solutions</div>
+        <h1>Payment Processing for <span>Sports & Entertainment</span></h1>
+        <p class="hero-subtitle">From ticketing to parking to concessions, manage every revenue stream. Create smooth, stress-free experiences for your fans while maximizing revenue.</p>
+        <p class="hero-promise">Ticketing • Parking • Mobile POS • Kiosks</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">Start Your Demo</button>
+          <button class="btn-outline" onclick="showPage('solution-ticketing')">View Ticketing Solutions</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-placeholder">[Sports & Entertainment Payment System Image]</div>
+      </div>
+    </div>
+  </div>
+
+  <section style="background: #f6f9fc;">
+    <div class="section-inner">
+      <h2 class="section-title">Payment Solutions for <span>Events & Venues</span></h2>
+      <p class="section-sub">Create a smooth, stress-free experience from the very first touchpoint.</p>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <h3>🎫 Ticketing</h3>
+          <p>Create a smooth, stress-free experience from the very first touchpoint. With integrations across leading ticketing platforms, you get a complete end-to-end solution—so you can stay focused on delivering the event while your fans enjoy every moment.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🚗 Parking</h3>
+          <p>Keep arrivals smooth and traffic flowing. Reduce congestion and eliminate delays by accepting all payment types with a mobile POS, creating a faster and more efficient parking experience.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🍿 Self-Service Kiosks for Food & Beverage</h3>
+          <p>Give fans a faster, more convenient way to order. Self-service kiosks let guests browse menus, customize meals, and pay in seconds—reducing long lines and freeing up staff during peak times. Orders go straight to the kitchen, improving accuracy and speed.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📱 Mobile Payments & Ticket Scanning</h3>
+          <p>Keep entry lines moving and transactions effortless. With mobile ticket scanning and on-the-spot payments, staff can check tickets and accept all payment types anywhere in the venue. It speeds up entry, reduces congestion, and creates a smoother experience from arrival to checkout.</p>
+        </div>
+        <div class="feature-card">
+          <h3>💰 Real-Time Revenue Tracking</h3>
+          <p>See all revenue streams in real-time. Track ticket sales, concessions, parking, and merchandise from one dashboard. Make data-driven decisions during events.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📊 Event Analytics</h3>
+          <p>Understand fan spending patterns. Track which concessions are most popular. Optimize pricing and staffing. Plan better for future events.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner" style="text-align: center;">
+      <h2 class="section-title">Delight Your <span>Fans & Increase Revenue</span></h2>
+      <p class="section-sub">Sports venues increase revenue by 25% with integrated payment systems.</p>
+      <div class="hero-btns" style="justify-content: center; margin-top: 40px;">
+        <button class="btn-primary" onclick="showPage('contact')">Schedule Demo</button>
+        <button class="btn-outline">View Ticketing Solutions</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOD & BEVERAGE INDUSTRY PAGE -->
+<div id="page-industry-food" class="page">
+  <div class="hero" style="min-height: 60vh;">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">Food & Beverage Solutions</div>
+        <h1>Payment Processing for <span>Restaurants & Cafes</span></h1>
+        <p class="hero-subtitle">From quick-serve to fine dining, manage orders, payments, and customer relationships seamlessly. Real-time kitchen management, inventory tracking, and staff insights.</p>
+        <p class="hero-promise">Fast Checkout • Kitchen Management • Customer Loyalty</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">Start Your Demo</button>
+          <button class="btn-outline" onclick="showPage('solution-pos')">Explore POS</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-placeholder">[Food & Beverage System Image]</div>
+      </div>
+    </div>
+  </div>
+
+  <section style="background: #f6f9fc;">
+    <div class="section-inner">
+      <h2 class="section-title">Complete <span>Restaurant Solutions</span></h2>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <h3>🍽️ Table Management</h3>
+          <p>Manage seating, reservations, and table turnover. Track wait times. Send automatic reminders for reservations.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🍳 Kitchen Display System</h3>
+          <p>Orders sent directly to kitchen. Real-time order status. Reduce wait times and errors. Perfect for busy service.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📦 Inventory Management</h3>
+          <p>Track ingredient costs. Set low-stock alerts. Manage supplier orders. Calculate food costs automatically.</p>
+        </div>
+        <div class="feature-card">
+          <h3>👥 Staff Management</h3>
+          <p>Track employee hours. Manage tips and commissions. Identify top performers. Labor cost analytics.</p>
+        </div>
+        <div class="feature-card">
+          <h3>💳 Quick Payments</h3>
+          <p>Table-side payment processing. Split checks easily. Tap and contactless payments. Digital receipts.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📊 Profitable Insights</h3>
+          <p>Track profitability by dish. Identify best-selling items. Peak hour analysis. Make data-driven menu changes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner" style="text-align: center;">
+      <h2 class="section-title">Grow Your <span>Restaurant Revenue</span></h2>
+      <p class="section-sub">Restaurants increase revenue by 20% with integrated payment systems.</p>
+      <div class="hero-btns" style="justify-content: center; margin-top: 40px;">
+        <button class="btn-primary" onclick="showPage('contact')">Schedule Demo</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+
+<!-- HEALTHCARE INDUSTRY PAGE -->
+<div id="page-industry-healthcare" class="page">
+  <div class="hero" style="min-height: 60vh;">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">Healthcare Payment Solutions</div>
+        <h1>Payment Processing for <span>Healthcare Providers</span></h1>
+        <p class="hero-subtitle">From patient copays to insurance billing, manage healthcare payments securely. HIPAA-compliant, PCI-certified, and trusted by medical practices.</p>
+        <p class="hero-promise">Secure • Compliant • Patient-Friendly</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">Start Your Demo</button>
+          <button class="btn-outline">View Solutions</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-placeholder">[Healthcare System Image]</div>
+      </div>
+    </div>
+  </div>
+
+  <section style="background: #f6f9fc;">
+    <div class="section-inner">
+      <h2 class="section-title">Healthcare <span>Payment Solutions</span></h2>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <h3>🏥 Patient Payments</h3>
+          <p>Copay collection at check-in. Payment plan options. Online bill pay. Automated payment reminders.</p>
+        </div>
+        <div class="feature-card">
+          <h3>💳 Insurance Billing</h3>
+          <p>Direct insurance billing integration. Claim tracking. Denial management. Compliance reporting.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🔐 HIPAA Compliance</h3>
+          <p>Secure patient data. Encrypted communications. Audit trails. Regulatory reporting built-in.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📋 Patient Records</h3>
+          <p>Secure patient portal. Payment history tracking. Insurance verification. Appointment management.</p>
+        </div>
+        <div class="feature-card">
+          <h3>💰 Revenue Cycle</h3>
+          <p>Automated billing workflows. Claims submission. Follow-up on unpaid invoices. Collections management.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📊 Financial Analytics</h3>
+          <p>Revenue tracking by provider. Patient payment analysis. Outstanding balance reports. Operational insights.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- RETAIL INDUSTRY PAGE -->
+<div id="page-industry-retail" class="page">
+  <div class="hero" style="min-height: 60vh;">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">Retail Payment Solutions</div>
+        <h1>Payment Processing for <span>Retail Stores</span></h1>
+        <p class="hero-subtitle">From inventory to checkout to customer loyalty. Unified retail system that works in-store, online, and everywhere in between.</p>
+        <p class="hero-promise">Inventory • Omnichannel • Customer Intelligence</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">Start Your Demo</button>
+          <button class="btn-outline" onclick="showPage('solution-agora')">View Agora Retail</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-placeholder">[Retail System Image]</div>
+      </div>
+    </div>
+  </div>
+
+  <section style="background: #f6f9fc;">
+    <div class="section-inner">
+      <h2 class="section-title">Complete <span>Retail Solutions</span></h2>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <h3>📦 Inventory Management</h3>
+          <p>Real-time inventory across locations. Barcode scanning. Low-stock alerts. Automatic reordering.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🛒 POS System</h3>
+          <p>Fast checkout experience. All payment types accepted. Receipt customization. Employee management.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🛍️ Omnichannel Selling</h3>
+          <p>In-store, online, and mobile sales. Unified inventory. Buy online pick up in store. Consistent pricing.</p>
+        </div>
+        <div class="feature-card">
+          <h3>👥 Customer Loyalty</h3>
+          <p>Loyalty programs and rewards. Purchase history tracking. Personalized promotions. Customer insights.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📊 Sales Analytics</h3>
+          <p>Best-selling products. Sales trends by time and location. Staff performance tracking. Margin analysis.</p>
+        </div>
+        <div class="feature-card">
+          <h3>💰 Financial Reporting</h3>
+          <p>Daily sales reports. Inventory valuation. Profit analysis by product. Tax compliance ready.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- NON-PROFITS INDUSTRY PAGE -->
+<div id="page-industry-nonprofit" class="page">
+  <div class="hero" style="min-height: 60vh;">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">Non-Profit Payment Solutions</div>
+        <h1>Payment Processing for <span>Non-Profits</span></h1>
+        <p class="hero-subtitle">Accept donations, memberships, and event registrations. Transparent pricing helps your mission keep more funds focused on impact.</p>
+        <p class="hero-promise">Donations • Memberships • Events</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">Start Your Demo</button>
+          <button class="btn-outline">View Solutions</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-placeholder">[Non-Profit System Image]</div>
+      </div>
+    </div>
+  </div>
+
+  <section style="background: #f6f9fc;">
+    <div class="section-inner">
+      <h2 class="section-title">Fundraising <span>Solutions</span></h2>
+      <div class="cards-grid">
+        <div class="feature-card">
+          <h3>💝 Donation Processing</h3>
+          <p>Simple one-time donations. Recurring giving programs. Donor recognition. Tax receipt automation.</p>
+        </div>
+        <div class="feature-card">
+          <h3>👥 Membership Management</h3>
+          <p>Membership tier management. Automatic renewal billing. Member communications. Community portal.</p>
+        </div>
+        <div class="feature-card">
+          <h3>🎫 Event Registration</h3>
+          <p>Event ticketing and registration. Multiple ticket types. Capacity management. Automated confirmations.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📊 Donor Analytics</h3>
+          <p>Donor lifetime value tracking. Donation frequency analysis. Retention metrics. Fundraising insights.</p>
+        </div>
+        <div class="feature-card">
+          <h3>📈 Transparent Reporting</h3>
+          <p>Financial transparency reports. Impact metrics tracking. Donor communication dashboards. Grant reporting.</p>
+        </div>
+        <div class="feature-card">
+          <h3>💰 Low Costs</h3>
+          <p>Non-profit friendly pricing. No hidden fees. Maximum funds go to your mission. Industry-best rates.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner" style="text-align: center;">
+      <h2 class="section-title">Maximize Your <span>Impact</span></h2>
+      <p class="section-sub">Non-profits keep more funds for their mission with transparent, low-cost payment processing.</p>
+      <div class="hero-btns" style="justify-content: center; margin-top: 40px;">
+        <button class="btn-primary" onclick="showPage('contact')">Get Started</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+
 <div id="page-solution-golf" class="page">
   <div class="hero" style="min-height: 60vh;">
     <div class="hero-inner">
       <div>
         <div class="hero-badge">Golf Course Payment Solutions</div>
         <h1>Complete Payment System for <span>Golf Courses</span></h1>
-        <p class="hero-subtitle">From tee time bookings to pro shop sales, beverage cart payments to tournament management—all integrated into one powerful platform.</p>
+        <p class="hero-subtitle">From tee time bookings to pro shop sales, beverage cart payments to tournament management—all integrated.</p>
         <p class="hero-promise">Tee Time Booking • Pro Shop • Membership • Cart Payments</p>
         <div class="hero-btns">
           <button class="btn-primary" onclick="showPage('contact')">Start Your Demo</button>
@@ -282,7 +1563,7 @@
         </div>
       </div>
       <div class="hero-card">
-        <div class="hero-card-placeholder">[Golf Course Payment System Image]</div>
+        <div class="hero-card-placeholder">[Golf Course System]</div>
       </div>
     </div>
   </div>
@@ -292,25 +1573,20 @@
       <h2 class="section-title">Choose Your <span>Golf Course Type</span></h2>
       <p class="section-sub">Golf course operations vary widely. We have specialized solutions for each.</p>
       <div class="cards-grid">
-        <div class="feature-card" onclick="showPage('golf-multi'); scrollTo(0,0)">
-          <h3>🏌️ Multi-Course Resorts</h3>
-          <p>Manage multiple courses from one dashboard. Guest charging across facilities. Package deals and memberships. Shared inventory and staff management.</p>
-          <p style="color: var(--blue); font-weight: 600; margin-top: 12px; cursor: pointer;">Learn More →</p>
-        </div>
-        <div class="feature-card" onclick="showPage('golf-municipal'); scrollTo(0,0)">
+        <div class="feature-card" onclick="showPage('golf-municipal'); window.scrollTo(0, 0);" style="cursor: pointer;">
           <h3>🏛️ Municipal Courses</h3>
           <p>Budget-friendly solutions for public courses. Quick tee time bookings. Food & beverage management. Tournament and event support.</p>
-          <p style="color: var(--blue); font-weight: 600; margin-top: 12px; cursor: pointer;">Learn More →</p>
+          <p style="color: var(--blue); font-weight: 600; margin-top: 12px;">Learn More →</p>
         </div>
-        <div class="feature-card" onclick="showPage('golf-private'); scrollTo(0,0)">
+        <div class="feature-card" onclick="showPage('golf-private'); window.scrollTo(0, 0);" style="cursor: pointer;">
           <h3>🏰 Private Clubs</h3>
           <p>Membership management and billing. Guest charging with member guarantees. Dining and cart billing. Club-wide revenue tracking.</p>
-          <p style="color: var(--blue); font-weight: 600; margin-top: 12px; cursor: pointer;">Learn More →</p>
+          <p style="color: var(--blue); font-weight: 600; margin-top: 12px;">Learn More →</p>
         </div>
-        <div class="feature-card" onclick="showPage('golf-resort'); scrollTo(0,0)">
+        <div class="feature-card" onclick="showPage('golf-resort'); window.scrollTo(0, 0);" style="cursor: pointer;">
           <h3>🏨 Golf Resorts</h3>
           <p>Guest billing integration with hotel. Package deals (golf + lodging). All-inclusive resort billing. Tournament hosting capabilities.</p>
-          <p style="color: var(--blue); font-weight: 600; margin-top: 12px; cursor: pointer;">Learn More →</p>
+          <p style="color: var(--blue); font-weight: 600; margin-top: 12px;">Learn More →</p>
         </div>
       </div>
     </div>
@@ -355,70 +1631,6 @@
       <div class="hero-btns" style="justify-content: center; margin-top: 40px;">
         <button class="btn-primary" onclick="showPage('contact')">Schedule Demo</button>
         <button class="btn-outline">Download Golf Guide</button>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- GOLF SUB-PAGE: MULTI-COURSE -->
-<div id="page-golf-multi" class="page">
-  <div class="hero" style="min-height: 60vh;">
-    <div class="hero-inner">
-      <div>
-        <div class="hero-badge">Golf Resort Solutions</div>
-        <h1>Payment System for <span>Multi-Course Resorts</span></h1>
-        <p class="hero-subtitle">Manage multiple championship courses from a single dashboard. Guest charging across properties, bundled packages, and unified reporting.</p>
-        <p class="hero-promise">Multi-Property • Package Deals • Unified Reporting</p>
-        <div class="hero-btns">
-          <button class="btn-primary" onclick="showPage('contact')">Start Your Demo</button>
-          <button class="btn-outline" onclick="showPage('solution-golf')">Back to Golf Solutions</button>
-        </div>
-      </div>
-      <div class="hero-card">
-        <div class="hero-card-placeholder">[Multi-Course Resort Image]</div>
-      </div>
-    </div>
-  </div>
-
-  <section style="background: #f6f9fc;">
-    <div class="section-inner">
-      <h2 class="section-title">Multi-Course <span>Resort Management</span></h2>
-      <div class="cards-grid">
-        <div class="feature-card">
-          <h3>🏌️ Multiple Course Management</h3>
-          <p>One system for all courses. Course-specific pricing rules. Shared guest profiles across properties. Unified inventory management.</p>
-        </div>
-        <div class="feature-card">
-          <h3>👥 Guest Charging</h3>
-          <p>Charge all resort expenses to guest accounts. Golf, dining, spa, lodging—all consolidated. Single checkout experience.</p>
-        </div>
-        <div class="feature-card">
-          <h3>📦 Package Deals</h3>
-          <p>Bundle golf + lodging + dining. Dynamic pricing by season. Package tracking and redemption. Multi-day tournament support.</p>
-        </div>
-        <div class="feature-card">
-          <h3>🎯 Tournament Hosting</h3>
-          <p>Manage corporate outings and events. Entry fee collection. Scoring integration. Leaderboard management and updates.</p>
-        </div>
-        <div class="feature-card">
-          <h3>👨‍💼 Staff Management</h3>
-          <p>Shared staff across courses. Shift scheduling and tracking. Tip pool management. Performance analytics by course.</p>
-        </div>
-        <div class="feature-card">
-          <h3>📊 Resort Analytics</h3>
-          <p>Revenue by course and category. Guest spending patterns. Course utilization rates. Pricing optimization insights.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="section-inner" style="text-align: center;">
-      <h2 class="section-title">Manage Your Resort with <span>One System</span></h2>
-      <p class="section-sub">Resort operators reduce operational complexity by 35% with unified systems.</p>
-      <div class="hero-btns" style="justify-content: center; margin-top: 40px;">
-        <button class="btn-primary" onclick="showPage('contact')">Schedule Demo</button>
-        <button class="btn-outline" onclick="showPage('solution-golf')">View All Golf Solutions</button>
       </div>
     </div>
   </section>
@@ -616,99 +1828,74 @@
   </section>
 </div>
 
-<!-- AGORA RETAIL PLATFORM PAGE -->
-<div id="page-solution-agora" class="page">
-  <div class="hero" style="min-height: 60vh;">
-    <div class="hero-inner">
-      <div>
-        <div class="hero-badge">Retail Management Platform</div>
-        <h1>Agora <span>Retail Platform</span></h1>
-        <p class="hero-subtitle">One system for inventory, sales, payments, and customers. Stop juggling five apps. Manage in-store, online, and marketplace sales from one dashboard.</p>
-        <p class="hero-promise">Unified • Real-Time • Scalable</p>
-        <div class="hero-btns">
-          <button class="btn-primary" onclick="showPage('contact')">Start Free Trial</button>
-          <button class="btn-outline">View Pricing</button>
-        </div>
-      </div>
-      <div class="hero-card">
-        <div class="hero-card-placeholder">[Agora Retail Platform Dashboard Image]</div>
-      </div>
-    </div>
-  </div>
-
-  <section style="background: #f6f9fc;">
-    <div class="section-inner">
-      <h2 class="section-title">Unified Retail <span>Operating System</span></h2>
-      <p class="section-sub">Inventory doesn't match reality. Customer data is scattered. Payments don't sync. You're managing five apps instead of running your store. Agora fixes all of it.</p>
-
-      <div class="cards-grid">
-        <div class="feature-card">
-          <h3>🛍️ Unified Commerce</h3>
-          <p>In-store, online, and marketplace sales on one dashboard. Inventory syncs automatically. One customer profile everywhere.</p>
-        </div>
-        <div class="feature-card">
-          <h3>📊 Real-Time Analytics</h3>
-          <p>See what's selling, what's not, and why. Dashboards that actually make sense. Decisions based on data, not guesses.</p>
-        </div>
-        <div class="feature-card">
-          <h3>👥 Customer Intelligence</h3>
-          <p>Track purchase history, preferences, lifetime value. Build loyalty programs. Turn customers into repeat buyers.</p>
-        </div>
-        <div class="feature-card">
-          <h3>📱 Mobile-First Control</h3>
-          <p>Manage your store from anywhere. Check inventory while home. Approve orders from your phone. Real-time sales tracking.</p>
-        </div>
-        <div class="feature-card">
-          <h3>⚡ Instant Checkout</h3>
-          <p>Fast transactions mean happy customers. Apple Pay, Google Pay, cards—processed in milliseconds.</p>
-        </div>
-        <div class="feature-card">
-          <h3>🔒 Enterprise Security</h3>
-          <p>PCI DSS Level 1, end-to-end encryption, regular audits. Your customer data is treated like your most valuable asset.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="section-inner" style="text-align: center;">
-      <h2 class="section-title">Ready to Transform <span>Your Retail?</span></h2>
-      <p class="section-sub">30 days free. No credit card. No contracts. See the difference.</p>
-      <div class="hero-btns" style="justify-content: center; margin-top: 40px;">
-        <button class="btn-primary" onclick="showPage('contact')">Start Free Trial</button>
-        <button class="btn-outline">Schedule Demo</button>
-      </div>
-    </div>
-  </section>
-</div>
-
 <!-- PRICING PAGE -->
 <div id="page-pricing" class="page">
   <section>
     <div class="section-inner">
-      <div class="section-label">Simple, Honest Pricing</div>
-      <h2 class="section-title">Pricing That Makes <span>Sense</span></h2>
-      <p class="section-sub">No hidden fees. No quarterly increases. No surprises. Just honest pricing based on what you actually use.</p>
+      <div class="section-label">Transparent Pricing That Doesn't Change</div>
+      <h2 class="section-title">Industry-Leading <span>Rates & Transparency</span></h2>
+      <p class="section-sub">Not a typo. Here's the actual math.</p>
     </div>
   </section>
 
   <section style="background: #f6f9fc;">
     <div class="section-inner">
-      <div style="background: white; padding: 32px; border-radius: 12px; margin-bottom: 48px; border: 1px solid var(--border);">
-        <h3 style="margin-bottom: 20px; color: var(--text-dark); font-size: 18px;">How We Price</h3>
-        <p style="margin-bottom: 20px; font-size: 15px; color: var(--text-mid); line-height: 1.8;">Most processors hide costs in confusing terms. We don't. Here's exactly what you pay:</p>
+      <div style="background: white; padding: 40px; border-radius: 12px; margin-bottom: 48px; border: 2px solid var(--blue);">
+        <h3 style="margin-bottom: 32px; color: var(--text-dark); font-size: 20px; text-align: center;">Your Monthly Cost Comparison</h3>
+        <p style="text-align: center; margin-bottom: 40px; font-size: 14px; color: var(--text-mid);">On $100,000 in monthly card processing:</p>
+        
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 40px;">
+          <div style="text-align: center; padding: 24px; background: #f0f8ff; border-radius: 8px; border: 2px solid var(--blue);">
+            <h4 style="color: var(--blue); margin-bottom: 8px; font-size: 14px; font-weight: 600;">PioneerEpay</h4>
+            <div style="font-size: 36px; font-weight: 700; color: var(--blue); margin: 16px 0;">$260</div>
+            <p style="font-size: 12px; color: var(--text-mid);">0.25% + $0.10/tx</p>
+          </div>
+          <div style="text-align: center; padding: 24px; background: #f5f5f5; border-radius: 8px;">
+            <h4 style="color: var(--text-dark); margin-bottom: 8px; font-size: 14px; font-weight: 600;">Industry Standard</h4>
+            <div style="font-size: 36px; font-weight: 700; color: #999; margin: 16px 0;">$2,500+</div>
+            <p style="font-size: 12px; color: var(--text-mid);">2.7%+ + $0.15/tx</p>
+          </div>
+          <div style="text-align: center; padding: 24px; background: #e8f5e9; border-radius: 8px;">
+            <h4 style="color: #2e7d32; margin-bottom: 8px; font-size: 14px; font-weight: 600;">Your Savings</h4>
+            <div style="font-size: 36px; font-weight: 700; color: #2e7d32; margin: 16px 0;">$2,240+</div>
+            <p style="font-size: 12px; color: var(--text-mid);">Per month on $100K vol</p>
+          </div>
+        </div>
+
+        <div style="background: rgba(0, 168, 232, 0.1); padding: 20px; border-radius: 8px; text-align: center;">
+          <p style="font-size: 14px; color: var(--blue); font-weight: 600; margin: 0;">
+            <strong>Save $2,240/month on $100K monthly volume.</strong><br>
+            <span style="font-size: 13px; color: var(--text-mid); font-weight: 400;">That's $26,880 per year in your pocket.</span>
+          </p>
+        </div>
+      </div>
+
+      <div style="background: white; padding: 40px; border-radius: 12px; margin-bottom: 48px; border: 1px solid var(--border);">
+        <h3 style="margin-bottom: 24px; color: var(--text-dark); font-size: 18px;">Our Simple Pricing</h3>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
           <div>
             <h4 style="color: var(--text-dark); margin-bottom: 8px; font-size: 14px; font-weight: 600;">Interchange</h4>
-            <p style="font-size: 13px; color: var(--text-mid);">What card networks charge. We pass it through at cost, no markup.</p>
+            <p style="font-size: 13px; color: var(--text-mid);">Visa/Mastercard's costs. We pass it through—we don't mark it up.</p>
           </div>
           <div>
-            <h4 style="color: var(--text-dark); margin-bottom: 8px; font-size: 14px; font-weight: 600;">Our Fee: 0.25%</h4>
-            <p style="font-size: 13px; color: var(--text-mid);">Of each transaction. Same for everyone. No negotiating needed.</p>
+            <h4 style="color: var(--text-dark); margin-bottom: 8px; font-size: 14px; font-weight: 600;">Our Markup: 0.25%</h4>
+            <p style="font-size: 13px; color: var(--text-mid);">Our profit. Same for a $1,000 pizza place and a $1M restaurant.</p>
           </div>
           <div>
             <h4 style="color: var(--text-dark); margin-bottom: 8px; font-size: 14px; font-weight: 600;">Per-Transaction: $0.10</h4>
-            <p style="font-size: 13px; color: var(--text-mid);">Flat rate. No surprises. No variation.</p>
+            <p style="font-size: 13px; color: var(--text-mid);">Covers payment processing infrastructure. Never changes.</p>
+          </div>
+          <div>
+            <h4 style="color: var(--text-dark); margin-bottom: 8px; font-size: 14px; font-weight: 600;">🔐 No Hidden Fees</h4>
+            <p style="font-size: 13px; color: var(--text-mid);">No setup fees. No monthly minimums. No termination fees.</p>
+          </div>
+          <div>
+            <h4 style="color: var(--text-dark); margin-bottom: 8px; font-size: 14px; font-weight: 600;">📌 Price Locked Forever</h4>
+            <p style="font-size: 13px; color: var(--text-mid);">Year 1, Year 5, Year 10. Same rate. No surprises.</p>
+          </div>
+          <div>
+            <h4 style="color: var(--text-dark); margin-bottom: 8px; font-size: 14px; font-weight: 600;">✂️ Cancel Anytime</h4>
+            <p style="font-size: 13px; color: var(--text-mid);">No 3-year contract. No early termination fee. Your choice.</p>
           </div>
         </div>
       </div>
@@ -716,16 +1903,16 @@
       <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
         <div style="background: white; border: 2px solid var(--border); border-radius: 12px; padding: 40px; text-align: center;">
           <h3 style="color: var(--text-dark); margin-bottom: 12px;">Starter</h3>
-          <p style="font-size: 13px; color: var(--text-light); margin-bottom: 24px;">For small businesses & solopreneurs</p>
+          <p style="font-size: 13px; color: var(--text-light); margin-bottom: 24px;">Under $50K/month</p>
           <div style="font-size: 40px; font-weight: 700; color: var(--blue); margin-bottom: 8px;">0.25%</div>
           <p style="font-size: 13px; color: var(--text-light); margin-bottom: 32px;">+ $0.10 per transaction</p>
           <button class="btn-primary" onclick="showPage('contact')" style="width: 100%;">Get Started</button>
         </div>
 
         <div style="background: white; border: 2px solid var(--blue); border-radius: 12px; padding: 40px; text-align: center; box-shadow: var(--shadow-lg); position: relative;">
-          <div style="background: var(--blue); color: white; padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; display: inline-block; margin-bottom: 16px; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);">MOST POPULAR</div>
+          <div style="background: var(--blue); color: white; padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; display: inline-block; margin-bottom: 16px; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);">MOST COMMON</div>
           <h3 style="color: var(--text-dark); margin-bottom: 12px; margin-top: 12px;">Professional</h3>
-          <p style="font-size: 13px; color: var(--text-light); margin-bottom: 24px;">For growing businesses</p>
+          <p style="font-size: 13px; color: var(--text-light); margin-bottom: 24px;">$50K - $500K/month</p>
           <div style="font-size: 40px; font-weight: 700; color: var(--blue); margin-bottom: 8px;">0.20%</div>
           <p style="font-size: 13px; color: var(--text-light); margin-bottom: 32px;">+ $0.10 per transaction</p>
           <button class="btn-primary" onclick="showPage('contact')" style="width: 100%;">Get Started</button>
@@ -733,10 +1920,43 @@
 
         <div style="background: white; border: 2px solid var(--border); border-radius: 12px; padding: 40px; text-align: center;">
           <h3 style="color: var(--text-dark); margin-bottom: 12px;">Enterprise</h3>
-          <p style="font-size: 13px; color: var(--text-light); margin-bottom: 24px;">For large operations</p>
+          <p style="font-size: 13px; color: var(--text-light); margin-bottom: 24px;">$500K+/month</p>
           <div style="font-size: 40px; font-weight: 700; color: var(--blue); margin-bottom: 8px;">Custom</div>
-          <p style="font-size: 13px; color: var(--text-light); margin-bottom: 32px;">Based on your volume</p>
+          <p style="font-size: 13px; color: var(--text-light); margin-bottom: 32px;">Volume-based pricing</p>
           <button class="btn-outline" onclick="showPage('contact')" style="width: 100%;">Talk to Sales</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner" style="text-align: center;">
+      <h2 class="section-title">What You Get With <span>Every Plan</span></h2>
+      <p class="section-sub">No upsells. No "pro" tiers. Everyone gets the same.</p>
+      <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+        <div class="feature-card" style="text-align: left;">
+          <h3>✓ 24/7 Human Support</h3>
+          <p>Real engineers. No chatbots. Call us at 3am, someone picks up.</p>
+        </div>
+        <div class="feature-card" style="text-align: left;">
+          <h3>✓ Real-Time Settlements</h3>
+          <p>Hours, not days. Your money when you need it.</p>
+        </div>
+        <div class="feature-card" style="text-align: left;">
+          <h3>✓ API & Integrations</h3>
+          <p>Works with Square, Shopify, QuickBooks, Stripe, and 50+ more platforms.</p>
+        </div>
+        <div class="feature-card" style="text-align: left;">
+          <h3>✓ PCI DSS Level 1</h3>
+          <p>Enterprise-grade security. Your customers' data is safe.</p>
+        </div>
+        <div class="feature-card" style="text-align: left;">
+          <h3>✓ Multi-Currency</h3>
+          <p>Accept payments in 30+ currencies. Settle in your local currency.</p>
+        </div>
+        <div class="feature-card" style="text-align: left;">
+          <h3>✓ No Contracts</h3>
+          <p>Cancel anytime. We keep you because we're genuinely better.</p>
         </div>
       </div>
     </div>
@@ -747,20 +1967,29 @@
 <div id="page-about" class="page">
   <section>
     <div class="section-inner">
-      <div class="section-label">Our Story</div>
-      <h2 class="section-title">About <span>PioneerEpay</span></h2>
-      <p class="section-sub">We started because payment processing was broken. We're fixing it.</p>
+      <div class="section-label">How We Got Here</div>
+      <h2 class="section-title">Built from <span>Frustration</span></h2>
+      <p class="section-sub">In 2017, our founders were running their own businesses. Then Square hit them with an "industry standard rate increase."</p>
     </div>
   </section>
 
   <section style="background: #f6f9fc;">
     <div class="section-inner">
-      <h3 style="color: var(--text-dark); margin-bottom: 24px; font-size: 20px;">Our Mission</h3>
-      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">In 2017, our founders were running their own businesses and watching processors make millions off hidden fees and arbitrary rate increases. They got frustrated and decided to build what they wished existed.</p>
+      <h3 style="color: var(--text-dark); margin-bottom: 24px; font-size: 20px;">The Story</h3>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">One of our founders was running a restaurant processing $150K/month. In a single quarter, their payment processor—who had promised "transparent pricing"—raised their rate from 2.6% to 2.87%. No notice. No conversation. Just a note buried in their monthly statement.</p>
       
-      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">Today, PioneerEpay serves thousands of restaurants, retail shops, healthcare providers, non-profits, entertainment venues, and golf courses across North America. We've processed over $15 billion in transactions with a 99.99% uptime guarantee.</p>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">That increase cost them $3,450 extra that year. For doing nothing different. They called their processor and got the runaround. "It's the market standard." "Everyone is doing it." "You're locked in for two more years anyway."</p>
       
-      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8;">We don't answer to venture capitalists. We answer to the entrepreneurs and team members who trust us with their transactions. That's why we lock in pricing forever, offer 24/7 human support, and never require contracts.</p>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">Another founder was running a salon. Their processor forced them to upgrade to a higher tier or lose features. $300/month they didn't need. "This or nothing," they were told.</p>
+
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 40px;"><strong>We got angry. And we built something different.</strong></p>
+
+      <h3 style="color: var(--text-dark); margin-bottom: 24px; font-size: 20px;">What We Built</h3>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">PioneerEpay is what we wish existed in 2017. A payment processor run by people who've actually had to make payroll on the money hitting their account the next day. Who've stressed about surprise rate increases. Who've asked, "Why am I paying $10K/year for a feature I don't use?"</p>
+
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">We're not a venture-backed company trying to maximize quarterly returns. We're not a mega-corporation squeezing merchants for every basis point. We're operators who said: <strong>"What if we just charged a fair price and stuck with it?"</strong></p>
+
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8;">Today, we process $2.3 billion annually for restaurants, retail shops, salons, golf courses, and 50+ other business types. And we've never raised the rate. Never locked anyone in. Never hidden a fee. We've grown because we're genuinely better—and that's the only way we want to win.</p>
     </div>
   </section>
 
@@ -769,20 +1998,44 @@
       <h3 style="color: var(--text-dark); margin-bottom: 40px; font-size: 20px;">What We Stand For</h3>
       <div class="cards-grid">
         <div class="feature-card">
-          <h3>💡 Radical Transparency</h3>
-          <p>No hidden fees. No negotiating. Same price for everyone. Ever. What you see is what you get.</p>
+          <h3>🤝 You Deserve Better</h3>
+          <p>Big payment processors profit by confusing you. Burying fees. Locking you in. We profit by being genuinely useful. That's our model.</p>
         </div>
         <div class="feature-card">
-          <h3>🤝 Support That Cares</h3>
-          <p>Real humans answer the phone. Engineers, not outsourced support. We fix problems because they're our problems too.</p>
+          <h3>💡 Transparency Over Everything</h3>
+          <p>Our pricing is on this page. 0.25% + $0.10. Same for everyone. Forever. No "call sales" tiers. No surprise increases. What you see is what you pay.</p>
         </div>
         <div class="feature-card">
-          <h3>💼 Built by Operators</h3>
-          <p>Our team has run the businesses you run. Restaurants, retail, salons, golf courses. We understand your challenges because we've lived them.</p>
+          <h3>👥 Humans > Chatbots</h3>
+          <p>You run a real business. You get a real person. A human who understands what happens when payment processing goes down at 6pm on a Saturday.</p>
         </div>
         <div class="feature-card">
-          <h3>🚀 Speed Matters</h3>
-          <p>Real-time settlements, instant support, next-day onboarding. Fast isn't a feature—it's our baseline.</p>
+          <h3>📈 Your Success is Our Success</h3>
+          <p>If you grow, we grow. If you leave, we lose. We're aligned with you. No lock-in, no fine print. Just mutual respect and actual value.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: #f6f9fc;">
+    <div class="section-inner" style="text-align: center;">
+      <h2 class="section-title">Numbers That Matter</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-top: 40px;">
+        <div>
+          <div style="font-size: 48px; font-weight: 700; color: var(--blue); margin-bottom: 8px;">$2.3B+</div>
+          <p style="font-size: 14px; color: var(--text-mid);">Processed Annually</p>
+        </div>
+        <div>
+          <div style="font-size: 48px; font-weight: 700; color: var(--blue); margin-bottom: 8px;">50K+</div>
+          <p style="font-size: 14px; color: var(--text-mid);">Active Merchants</p>
+        </div>
+        <div>
+          <div style="font-size: 48px; font-weight: 700; color: var(--blue); margin-bottom: 8px;">99.99%</div>
+          <p style="font-size: 14px; color: var(--text-mid);">Uptime SLA</p>
+        </div>
+        <div>
+          <div style="font-size: 48px; font-weight: 700; color: var(--blue); margin-bottom: 8px;">7 Years</div>
+          <p style="font-size: 14px; color: var(--text-mid);">Same Pricing</p>
         </div>
       </div>
     </div>
@@ -790,7 +2043,7 @@
 </div>
 
 <!-- CONTACT PAGE -->
-<div id="page-contact" class="page contact-section">
+<div id="page-contact" class="page">
   <section>
     <div class="section-inner">
       <div class="section-label">Let's Talk</div>
@@ -850,7 +2103,7 @@
 
           <div class="form-checkbox">
             <input type="checkbox" id="newsletter" name="newsletter">
-            <label for="newsletter">Keep me updated on PioneerEpay product launches and case studies</label>
+            <label for="newsletter">Keep me updated on PioneerEpay product launches</label>
           </div>
 
           <button type="submit" class="form-submit">Send Message</button>
@@ -866,7 +2119,7 @@
         <div class="feature-card">
           <h3>📧 Email</h3>
           <p><a href="mailto:hello@pioneerepay.com" style="color: var(--blue); font-weight: 600;">hello@pioneerepay.com</a></p>
-          <p style="font-size: 13px; color: var(--text-light); margin-top: 12px;">Response usually within 1 hour</p>
+          <p style="font-size: 13px; color: var(--text-light); margin-top: 12px;">Response within 1 hour</p>
         </div>
         <div class="feature-card">
           <h3>📞 Sales Hotline</h3>
@@ -875,10 +2128,186 @@
         </div>
         <div class="feature-card">
           <h3>💬 Live Chat</h3>
-          <p>Available on our site during business hours</p>
-          <p style="font-size: 13px; color: var(--text-light); margin-top: 12px;">Usually 2-3 minute response</p>
+          <p>Available during business hours</p>
+          <p style="font-size: 13px; color: var(--text-light); margin-top: 12px;">2-3 minute response</p>
         </div>
       </div>
+    </div>
+  </section>
+</div>
+
+<!-- PRIVACY POLICY PAGE -->
+<div id="page-privacy" class="page">
+  <section>
+    <div class="section-inner" style="max-width: 900px;">
+      <h1 style="font-size: 36px; margin-bottom: 32px;">Privacy Policy</h1>
+      <p style="font-size: 13px; color: var(--text-light); margin-bottom: 32px;"><strong>Effective Date:</strong> January 1, 2026 | <strong>Last Updated:</strong> January 1, 2026</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">1. Introduction</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">PioneerEpay Corporation ("Company," "we," "us," or "our") operates the PioneerEpay payment processing platform (the "Service"). This Privacy Policy explains how we collect, use, disclose, and otherwise process personal information in connection with our Service, website, and related products.</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">2. Information We Collect</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 16px;"><strong>2.1 Information You Provide Directly</strong></p>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">We collect information you provide when you sign up for an account, use our Service, or contact us, including:
+      • Account registration data (name, email, business name, phone number)
+      • Business information (address, industry type, business structure, tax ID)
+      • Payment and banking information (bank account details, routing numbers)
+      • Contact and communication records (support tickets, emails, calls)
+      • Documentation for compliance (business licenses, government IDs)</p>
+
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 16px;"><strong>2.2 Transaction Information</strong></p>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">When you process payments through our Service, we collect transaction data, including:
+      • Transaction amount, date, and time
+      • Card information (last 4 digits only; we never store full card numbers)
+      • Merchant and customer information related to transactions
+      • Payment method and status
+      • Refund and dispute information</p>
+
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 16px;"><strong>2.3 Automatically Collected Information</strong></p>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">We automatically collect certain information when you use our Service:
+      • Device information (IP address, browser type, operating system)
+      • Usage data (pages visited, features accessed, time spent)
+      • Cookies and similar tracking technologies
+      • Location information (approximate geographic location)</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">3. How We Use Your Information</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">We use collected information for the following purposes:
+      • Providing and improving the Service
+      • Processing payments and transactions
+      • Complying with legal and regulatory obligations
+      • Detecting and preventing fraud
+      • Customer support and communication
+      • Marketing and promotional activities (with your consent)
+      • Analytics and service optimization
+      • Protecting our rights and the rights of our users</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">4. Data Security</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">We implement comprehensive security measures to protect your information, including:
+      • PCI DSS Level 1 compliance for payment card data
+      • End-to-end encryption for sensitive data in transit and at rest
+      • Secure authentication protocols (OAuth 2.0, two-factor authentication)
+      • Regular security audits and penetration testing
+      • Access controls limiting employee access to personal information
+      • Incident response procedures for data breaches</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">5. Data Retention</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">We retain personal information for as long as necessary to provide the Service and comply with legal obligations. Transaction records are retained for a minimum of 7 years to comply with federal regulations. You may request deletion of your account and associated data, subject to legal retention requirements.</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">6. Information Sharing</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">We do not sell your personal information. We may share information with:
+      • Payment networks (Visa, Mastercard, etc.) as required for transaction processing
+      • Financial institutions and third-party payment processors
+      • Law enforcement when required by law
+      • Service providers who assist with our operations (under confidentiality agreements)
+      • Business partners for joint offerings (only with your consent)</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">7. Your Rights</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">Depending on your location, you may have the right to:
+      • Access your personal information
+      • Correct inaccurate information
+      • Request deletion of your information
+      • Object to processing of your information
+      • Opt-out of marketing communications
+      • Data portability</p>
+
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">To exercise these rights, contact us at privacy@pioneerepay.com with your request.</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">8. Third-Party Links</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">Our website may contain links to third-party websites. We are not responsible for their privacy practices. We encourage you to review their privacy policies before providing personal information.</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">9. Changes to This Policy</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">We may update this Privacy Policy periodically. We will notify you of material changes via email or by posting the updated policy on our website. Your continued use of the Service following such notification constitutes your acceptance of the updated policy.</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">10. Contact Us</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">If you have questions about this Privacy Policy or our privacy practices, please contact us at:</p>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8;">
+        <strong>Pioneer Enterprise Solutions, Inc.</strong><br>
+        PioneerEpay Division<br>
+        Privacy Department<br>
+        Email: privacy@pioneerepay.com<br>
+        Phone: 1-800-336-1257<br>
+        Address: 5900 Balcones Drive, Suite 24575<br>
+        Austin, TX 78731
+      </p>
+    </div>
+  </section>
+</div>
+
+<!-- TERMS OF SERVICE PAGE -->
+<div id="page-terms" class="page">
+  <section>
+    <div class="section-inner" style="max-width: 900px;">
+      <h1 style="font-size: 36px; margin-bottom: 32px;">Terms of Service</h1>
+      <p style="font-size: 13px; color: var(--text-light); margin-bottom: 32px;"><strong>Effective Date:</strong> January 1, 2026 | <strong>Last Updated:</strong> January 1, 2026</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">1. Agreement to Terms</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">By accessing and using the PioneerEpay payment processing platform (the "Service"), you accept and agree to be bound by the terms and conditions of this agreement. If you do not agree to abide by the above, please do not use this service.</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">2. Use License</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">Permission is granted to temporarily download one copy of the materials (information or software) on PioneerEpay's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
+      • Modify or copy the materials
+      • Use the materials for any commercial purpose or for any public display
+      • Attempt to reverse engineer or decompile any software contained on the Service
+      • Remove any copyright or other proprietary notations from the materials
+      • Transfer the materials to another person or "mirror" the materials on any other server
+      • Violate any applicable laws or regulations in your use of the Service</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">3. Disclaimer of Warranties</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">The materials on PioneerEpay's website are provided on an 'as is' basis. PioneerEpay makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">4. Limitations of Liability</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">In no event shall PioneerEpay or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on PioneerEpay's Service, even if PioneerEpay or a PioneerEpay authorized representative has been notified orally or in writing of the possibility of such damage.</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">5. Accuracy of Materials</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">The materials appearing on PioneerEpay's website could include technical, typographical, or photographic errors. PioneerEpay does not warrant that any of the materials on its website are accurate, complete, or current. PioneerEpay may make changes to the materials contained on its website at any time without notice.</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">6. Materials and Content Ownership</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">The materials appearing on PioneerEpay's website are copyrighted. Unless otherwise stated, PioneerEpay owns the intellectual property rights to all material on the Service. This grant does not include:
+      • Right to compile resources from this website into a collection for sale or distribution
+      • Right to retransmit the materials or content beyond what is reasonably necessary for viewing
+      • Right to remove any proprietary notations, labels, or marks
+      • Right to use the materials or content for unauthorized commercial purposes</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">7. Modifications to Service</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">PioneerEpay may revise these terms of service for our Service at any time without notice. By using this website, you are agreeing to be bound by the then current version of these terms of service.</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">8. Governing Law</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">These terms and conditions are governed by and construed in accordance with the laws of the State of Texas, and you irrevocably submit to the exclusive jurisdiction of the courts that are located in Travis County, Texas.</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">9. Account Responsibilities</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">You are responsible for maintaining the confidentiality of your account information and password. You agree to accept responsibility for all activities that occur under your account. You must notify us immediately of any unauthorized use of your account. PioneerEpay will not be liable for any loss or damage arising from your failure to protect your account information.</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">10. Prohibited Conduct</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">You agree that you will not use the Service for any unlawful purpose, to transmit any unlawful, abusive, defamatory, obscene, or fraudulent material, or to engage in any fraudulent activity or illegal activity. You agree not to use the Service to:
+      • Process transactions for illegal goods or services
+      • Engage in money laundering or terrorist financing
+      • Violate any applicable laws or regulations
+      • Harass, threaten, or defame any person
+      • Infringe on any intellectual property rights</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">11. Termination</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">PioneerEpay may terminate or suspend your account and access to the Service immediately, without prior notice or liability, for any reason whatsoever, including if you breach the Terms of Service. You may terminate your account at any time by contacting us. Upon termination, your right to use the Service will immediately cease.</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">12. Fees and Pricing</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">You agree to pay all fees and charges that you incur through your use of the Service. All pricing is stated in U.S. dollars. PioneerEpay reserves the right to change pricing with 30 days' written notice. Your continued use of the Service following such notice constitutes acceptance of the new pricing.</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">13. Dispute Resolution</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">Any dispute arising out of or relating to these Terms of Service or the Service shall be resolved through binding arbitration in Dallas County, Texas, in accordance with the rules of the American Arbitration Association. Each party shall bear its own costs and attorneys' fees.</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">14. Entire Agreement</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">These Terms of Service, along with our Privacy Policy, constitute the entire agreement between you and PioneerEpay regarding the use of the Service, and supersede all prior and concurrent agreements, proposals, and understandings, whether written or oral.</p>
+
+      <h2 style="font-size: 20px; margin-top: 40px; margin-bottom: 16px;">15. Contact Information</h2>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;">If you have any questions regarding these Terms of Service, please contact us at:</p>
+      <p style="font-size: 15px; color: var(--text-mid); line-height: 1.8;">
+        <strong>Pioneer Enterprise Solutions, Inc.</strong><br>
+        PioneerEpay Division<br>
+        Legal Department<br>
+        Email: legal@pioneerepay.com<br>
+        Phone: 1-800-336-1257<br>
+        Address: 5900 Balcones Drive, Suite 24575<br>
+        Austin, TX 78731
+      </p>
     </div>
   </section>
 </div>
@@ -887,22 +2316,22 @@
 <footer>
   <div class="footer-content">
     <div class="footer-col">
-      <div class="logo" style="margin-bottom: 16px; cursor: pointer;" onclick="showPage('home')">
-        <span style="color: #00a8e8;">Pioneer</span><div class="logo-icon" style="width: 32px; height: 32px; font-size: 14px;">e</div><span style="color: var(--gold);">pay</span>
+      <div class="logo" style="margin-bottom: 16px; cursor: pointer; font-size: 18px;" onclick="showPage('home')">
+        <span style="color: #00a8e8;">Pioneer</span><div class="logo-icon" style="width: 24px; height: 24px; font-size: 12px;">e</div><span style="color: var(--gold);">pay</span>
       </div>
       <p class="footer-desc">Real-time payment processing for restaurants, retail, healthcare, spas, golf courses, and nonprofits. Transparent pricing. Human support. Since 2017.</p>
-      <div style="display:flex;gap:12px;">
-        <a href="#" style="color:rgba(255,255,255,0.4); font-size:13px; transition:color 0.2s;">LinkedIn</a>
-        <a href="#" style="color:rgba(255,255,255,0.4); font-size:13px; transition:color 0.2s;">Twitter</a>
-        <a href="#" style="color:rgba(255,255,255,0.4); font-size:13px; transition:color 0.2s;">Facebook</a>
+      <div class="footer-social">
+        <a href="#">LinkedIn</a>
+        <a href="#">Twitter</a>
+        <a href="#">Facebook</a>
       </div>
     </div>
+    
     <div class="footer-col">
       <h4>Industries</h4>
       <ul>
         <li><a onclick="showPage('industry-food')">Food & Beverage</a></li>
-        <li><a onclick="showPage('industry-hospitality')">Hospitality</a></li>
-        <li><a onclick="showPage('industry-lodging')">Lodging</a></li>
+        <li><a onclick="showPage('industry-lodging')">Lodging & Resorts</a></li>
         <li><a onclick="showPage('industry-spa')">Spa & Salon</a></li>
         <li><a onclick="showPage('industry-sports')">Sports & Entertainment</a></li>
         <li><a onclick="showPage('industry-healthcare')">Healthcare</a></li>
@@ -910,6 +2339,7 @@
         <li><a onclick="showPage('industry-nonprofit')">Non-Profits</a></li>
       </ul>
     </div>
+
     <div class="footer-col">
       <h4>Solutions</h4>
       <ul>
@@ -920,9 +2350,9 @@
         <li><a onclick="showPage('solution-analytics')">Analytics</a></li>
         <li><a onclick="showPage('solution-ticketing')">Ticketing</a></li>
         <li><a onclick="showPage('solution-golf')">Golf Solutions</a></li>
-        <li><a onclick="showPage('solution-agora')">Agora Retail</a></li>
       </ul>
     </div>
+
     <div class="footer-col">
       <h4>Company</h4>
       <ul>
@@ -930,15 +2360,74 @@
         <li><a onclick="showPage('pricing')">Pricing</a></li>
         <li><a href="#">Blog</a></li>
         <li><a onclick="showPage('contact')">Contact</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Terms of Service</a></li>
+        <li><a onclick="showPage('privacy')">Privacy Policy</a></li>
+        <li><a onclick="showPage('terms')">Terms of Service</a></li>
         <li><a href="https://www.tuna-pos.com" target="_blank">TunaPos</a></li>
+        <li><a href="https://agora-retail.com" target="_blank">Agora Retail</a></li>
       </ul>
     </div>
   </div>
+  
   <div class="footer-bottom">
-    <p class="footer-copyright">© 2026 PioneerEpay. We're a wholly owned subsidiary of Pioneer Enterprise Solutions, Inc., built to stay independent and focused on serving your business. All other trademarks are property of their respective owners.</p>
+    <p class="footer-copyright">© 2026 PioneerEpay. A wholly owned subsidiary of Pioneer Enterprise Solutions, Inc., built to stay independent and focused on serving your business. All other trademarks are property of their respective owners.</p>
   </div>
 </footer>
+
+<script>
+function showPage(pageId) {
+  document.querySelectorAll('.page').forEach(page => {
+    page.classList.remove('active');
+  });
+  const page = document.getElementById('page-' + pageId);
+  if (page) {
+    page.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+}
+
+function toggleMenu() {
+  const menu = document.getElementById('navMenu');
+  menu.classList.toggle('active');
+}
+
+function closeMenu() {
+  const menu = document.getElementById('navMenu');
+  menu.classList.remove('active');
+}
+
+function toggleDropdown(event, dropdownId) {
+  event.preventDefault();
+  const dropdown = document.getElementById(dropdownId);
+  dropdown.classList.toggle('active');
+}
+
+function handleFormSubmit(event) {
+  event.preventDefault();
+  
+  const formMessage = document.getElementById('formMessage');
+  const form = document.getElementById('contactForm');
+  
+  formMessage.classList.add('success');
+  formMessage.classList.remove('error');
+  formMessage.textContent = 'Thanks! We\'ll be in touch within 1 hour.';
+  
+  form.reset();
+  
+  setTimeout(() => {
+    formMessage.classList.remove('success');
+  }, 5000);
+  
+  console.log('Form submitted');
+}
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.nav-dropdown')) {
+    document.querySelectorAll('.dropdown-menu').forEach(menu => {
+      menu.classList.remove('active');
+    });
+  }
+});
+</script>
+
 </body>
 </html>
